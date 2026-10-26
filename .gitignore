@@ -1,0 +1,24 @@
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+__pycache__/
+*.pyc
+.DS_Store
+._*
+# New projects and all locally generated demo/results must stay private.
+demo_workspace*/
+workspaces/
+RawExams/
+evals/
+compiled*/
+*.zip
+*.xlsx
+*.csv
+.*_backups/
+# The synthetic fixture PDFs/JSON in examples are intentionally distributable.
+!/examples/minimal_exam/RawExams/
+/examples/minimal_exam/RawExams/*
+!/examples/minimal_exam/RawExams/Exam001.pdf
+!/examples/minimal_exam/RawExams/Exam002.pdf
