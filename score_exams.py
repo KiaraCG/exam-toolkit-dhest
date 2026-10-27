@@ -206,19 +206,22 @@ def call_model(client: Any, config: Config, options: Settings, prompt: str,
         "Read every page and grade exactly the manifest items. Return only the required JSON."
     )
 
+    # Combine instructions and image parts into standard chat messages format
+    messages = [
+        {"role": "system", "content": prompt},
+        {
+            "role": "user",
+            "content": rubric_parts + exam_parts + [{"type": "text", "text": instruction_text}]
+        }
+    ]
+
     request = dict(
         model=options.deployment,
-        store=False,
-        truncation="disabled",
-        max_output_tokens=options.max_tokens,
-        instructions=prompt,
-        input=[{
-            "role": "user",
-            "content": rubric_parts + exam_parts + [{"type": "input_text", "text": instruction_text}]
-        }],
-        text={
-            "format": {
-                "type": "json_schema",
+        messages=messages,
+        max_tokens=options.max_tokens,
+        response_format={
+            "type": "json_schema",
+            "json_schema": {
                 "name": "exam_grade",
                 "strict": True,
                 "schema": output_schema(config)
@@ -226,34 +229,34 @@ def call_model(client: Any, config: Config, options: Settings, prompt: str,
         }
     )
     if options.effort:
-        request["reasoning"] = {"effort": options.effort}
+        request["reasoning_effort"] = options.effort
 
     print("  Images prepared; waiting for the scoring response from Swiss AI (non-streaming)...", flush=True)
     start = time.monotonic()
-    response = client.responses.create(**request)
-    status = getattr(response, "status", None)
-    if status != "completed":
-        raise ExamError(f"Model response status {status!r}; no partial grade saved. "
-                        f"Details: {getattr(response, 'incomplete_details', None)}")
-    for block in getattr(response, "output", []) or []:
-        for content in getattr(block, "content", []) or []:
-            if getattr(content, "type", None) == "refusal":
-                raise ExamError("Model refused; no grade saved")
-    raw = getattr(response, "output_text", None)
+    
+    # Use standard chat completions endpoint
+    response = client.chat.completions.create(**request)
+    
+    choice = response.choices[0]
+    if getattr(choice, "finish_reason", None) == "content_filter":
+        raise ExamError("Model refused or content filtered; no grade saved")
+        
+    raw = choice.message.content
     if not isinstance(raw, str) or not raw.strip():
         raise ExamError("Model returned no grade JSON")
+        
     result = validate_result(strict_loads(raw), config)
     usage = getattr(response, "usage", None)
     meta = {
         "response_id": getattr(response, "id", None),
         "reported_model": getattr(response, "model", None),
         "elapsed_seconds": round(time.monotonic() - start, 3),
-        "input_tokens": getattr(usage, "input_tokens", None),
-        "output_tokens": getattr(usage, "output_tokens", None)
+        "input_tokens": getattr(usage, "prompt_tokens", None),
+        "output_tokens": getattr(usage, "completion_tokens", None)
     }
     print(f"  Response received after {meta['elapsed_seconds']} s; {meta['response_id']}", flush=True)
     return result, meta
-
+    
 def save_result(output: Path, result: dict[str, Any], expected: dict[str, Any], meta: dict[str, Any]) -> None:
     raw = json_bytes(result)
     record = {"schema_version": 1, "completed_at_utc": datetime.now(timezone.utc).isoformat(),
