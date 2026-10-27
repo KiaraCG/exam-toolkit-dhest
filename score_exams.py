@@ -28,7 +28,7 @@ from exam_common import (VERSION, Config, ExamError, discover, generated_prompt,
                          json_bytes, load_config, load_json, output_schema,
                          sha256, strict_loads, validate_result, write_new)
 from pdf_inputs import PDFInput, check_pair, read_pdf, validate_rubric
-
+from utils import render_pdf_to_image_parts
 
 @dataclass(frozen=True)
 class Settings:
@@ -194,22 +194,41 @@ def delete_file(client: Any, identifier: str | dict | None) -> None:
 
 
 def call_model(client: Any, config: Config, options: Settings, prompt: str,
-               rubric_id: str, exam_id: str) -> tuple[dict[str, Any], dict[str, Any]]:
-    def file_part(identifier):
-        part = dict(identifier) if isinstance(identifier, dict) else {"type": "input_file", "file_id": identifier}
-        if options.pdf_detail:
-            part["detail"] = options.pdf_detail
-        return part
-    request = dict(model=options.deployment, store=False, truncation="disabled",
-                   max_output_tokens=options.max_tokens, instructions=prompt,
-                   input=[{"role": "user", "content": [file_part(rubric_id), file_part(exam_id),
-                           {"type": "input_text", "text": "File 1 is the approved rubric. File 2 is one complete student exam. "
-                            "Read every page and grade exactly the manifest items. Return only the required JSON."}]}],
-                   text={"format": {"type": "json_schema", "name": "exam_grade", "strict": True,
-                                    "schema": output_schema(config)}})
+               rubric: PDFInput, exam: PDFInput) -> tuple[dict[str, Any], dict[str, Any]]:
+    print("  Rendering rubric pages to images...", flush=True)
+    rubric_parts = render_pdf_to_image_parts(rubric.data)
+    print(f"  Rendering student exam pages ({exam.page_count} pages) to images...", flush=True)
+    exam_parts = render_pdf_to_image_parts(exam.data)
+
+    instruction_text = (
+        f"The first {len(rubric_parts)} images are the approved rubric. "
+        f"The remaining {len(exam_parts)} images are one complete student exam. "
+        "Read every page and grade exactly the manifest items. Return only the required JSON."
+    )
+
+    request = dict(
+        model=options.deployment,
+        store=False,
+        truncation="disabled",
+        max_output_tokens=options.max_tokens,
+        instructions=prompt,
+        input=[{
+            "role": "user",
+            "content": rubric_parts + exam_parts + [{"type": "input_text", "text": instruction_text}]
+        }],
+        text={
+            "format": {
+                "type": "json_schema",
+                "name": "exam_grade",
+                "strict": True,
+                "schema": output_schema(config)
+            }
+        }
+    )
     if options.effort:
         request["reasoning"] = {"effort": options.effort}
-    print("  Upload finished; waiting for the scoring response (non-streaming)...", flush=True)
+
+    print("  Images prepared; waiting for the scoring response from Swiss AI (non-streaming)...", flush=True)
     start = time.monotonic()
     response = client.responses.create(**request)
     status = getattr(response, "status", None)
@@ -225,12 +244,15 @@ def call_model(client: Any, config: Config, options: Settings, prompt: str,
         raise ExamError("Model returned no grade JSON")
     result = validate_result(strict_loads(raw), config)
     usage = getattr(response, "usage", None)
-    meta = {"response_id": getattr(response, "id", None), "reported_model": getattr(response, "model", None),
-            "elapsed_seconds": round(time.monotonic() - start, 3),
-            "input_tokens": getattr(usage, "input_tokens", None), "output_tokens": getattr(usage, "output_tokens", None)}
+    meta = {
+        "response_id": getattr(response, "id", None),
+        "reported_model": getattr(response, "model", None),
+        "elapsed_seconds": round(time.monotonic() - start, 3),
+        "input_tokens": getattr(usage, "input_tokens", None),
+        "output_tokens": getattr(usage, "output_tokens", None)
+    }
     print(f"  Response received after {meta['elapsed_seconds']} s; {meta['response_id']}", flush=True)
     return result, meta
-
 
 def save_result(output: Path, result: dict[str, Any], expected: dict[str, Any], meta: dict[str, Any]) -> None:
     raw = json_bytes(result)
