@@ -7,8 +7,7 @@ def render_pdf_to_image_parts(pdf_bytes: bytes, label: str = "PDF") -> list[dict
     doc = fitz.open(stream=pdf_bytes, filetype="pdf")
     image_parts = []
     for i, page in enumerate(doc):
-        # Render page to a high-res pixmap (150 DPI is ideal for text legibility)
-        pix = page.get_pixmap(dpi=150)
+        pix = page.get_pixmap(dpi=96)
         img_data = pix.tobytes("jpeg")
         b64_encoded = base64.b64encode(img_data).decode("ascii")
         image_parts.append({
