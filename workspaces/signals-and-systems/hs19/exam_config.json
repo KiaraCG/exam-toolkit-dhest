@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "exam_id": "SS_HS19",
+  "exam_title": "Signals & Systems (151-0575-01) Exam - February 6th, 2020",
+  "approved_for_scoring": false,
+  "paths": {
+    "manifest": "rubric_manifest.json",
+    "rubric": "Rubrics/rubric.pdf",
+    "prompt_template": "Prompts/prompt.template.txt",
+    "prompt": "Prompts/prompt.txt",
+    "exams": "RawExams",
+    "evals": "evals"
+  },
+  "filename_pattern": "^(?:(?:exam|student)_?)?(?P<id>[0-9]+)$",
+  "identity_mode": "numeric",
+  "max_combined_pdf_bytes": 50000000,
+  "rubric_validation": {
+    "mode": "sha256",
+    "approved_sha256": "08f39210bbfea7a6cd7d19806fe0734410ae1d66905d3a53763c08ac5f597ff1"
+  },
+  "notes": "Benchmark setting: each submission contains the answers of an AI model, not a student, typed and labelled by question part (e.g. 'Question 3.1'). The rubric is the official corrected solution with point allocations and grading remarks; follow those remarks for partial credit. Multiple-choice and true/false parts are all-or-nothing. No negative marking. No final grade conversion."
+}
