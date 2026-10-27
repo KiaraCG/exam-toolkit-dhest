@@ -1,4 +1,4 @@
-#!/work/courses/dslab/team-16/command_line_scoring/.venv/bin/python3
+#!/work/courses/dslab/team-16/exam-toolkit-dhest/.venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

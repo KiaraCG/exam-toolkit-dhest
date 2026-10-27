@@ -1,0 +1,2 @@
+﻿exam_number,part_id,explanation,rubric_item,reference_scope,mapping_note,matched_text,item_explanation,source_json,exam_file
+002,1.a,"1.a.a, PDF p. 1: the final selected option is deliberately ambiguous in this synthetic fixture. Check the original response; do not assume the intended correct choice.",1.a.a,criterion,Criterion mentioned in exam-level reason; not a structured item flag,1.a.a,"PDF p. 1: ambiguous final selection; provisional zero, human review requested.",/work/courses/dslab/team-16/exam-toolkit-dhest/demo_workspace/evals/Exam002.json,Exam002

@@ -1,8 +1,6 @@
-#!/work/courses/dslab/team-16/command_line_scoring/.venv/bin/python3
-# -*- coding: utf-8 -*-
-import re
+#!/work/courses/dslab/team-16/exam-toolkit-dhest/.venv/bin/python
 import sys
 from httpx2._main import main
 if __name__ == '__main__':
-    sys.argv[0] = re.sub(r'(-script\.pyw|\.exe)?$', '', sys.argv[0])
+    sys.argv[0] = sys.argv[0].removesuffix('.exe')
     sys.exit(main())
