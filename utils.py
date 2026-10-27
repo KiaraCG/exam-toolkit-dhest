@@ -1,4 +1,6 @@
 import fitz
+import base64
+from typing import Any
 
 def render_pdf_to_image_parts(pdf_bytes: bytes, label: str) -> list[dict[str, Any]]:
     """Render each page of a PDF into a base64 JPEG image part for vision models."""
