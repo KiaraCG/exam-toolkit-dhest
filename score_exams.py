@@ -244,7 +244,17 @@ def call_model(client: Any, config: Config, options: Settings, prompt: str,
     raw = choice.message.content
     if not isinstance(raw, str) or not raw.strip():
         raise ExamError("Model returned no grade JSON")
-        
+
+    # Strip markdown code fences if the model wrapped the JSON
+    cleaned_raw = raw.strip()
+    if cleaned_raw.startswith("```"):
+        lines = cleaned_raw.splitlines()
+        if lines[0].startswith("```"):
+            lines = lines[1:]
+        if lines and lines[-1].startswith("```"):
+            lines = lines[:-1]
+        cleaned_raw = "\n".join(lines).strip()
+         
     result = validate_result(strict_loads(raw), config)
     usage = getattr(response, "usage", None)
     meta = {
@@ -256,7 +266,7 @@ def call_model(client: Any, config: Config, options: Settings, prompt: str,
     }
     print(f"  Response received after {meta['elapsed_seconds']} s; {meta['response_id']}", flush=True)
     return result, meta
-    
+
 def save_result(output: Path, result: dict[str, Any], expected: dict[str, Any], meta: dict[str, Any]) -> None:
     raw = json_bytes(result)
     record = {"schema_version": 1, "completed_at_utc": datetime.now(timezone.utc).isoformat(),
