@@ -357,16 +357,18 @@ def main(argv=None) -> int:
                             print(f"Skip {path.name}: another worker completed it")
                             continue
                         print(f"[{n}/{len(pending)}] Grade {path.name}", flush=True)
-                        if rubric_id is None:
-                            print(f"  Uploading rubric ({rubric.page_count} pages)", flush=True)
-                            rubric_id = upload_pdf(client, rubric, options)
-                        exam_id = None
-                        try:
-                            print(f"  Uploading student PDF ({exam.page_count} pages)", flush=True)
-                            exam_id = upload_pdf(client, exam, options)
-                            result, meta = call_model(client, config, options, prompt, rubric_id, exam_id)
-                        finally:
-                            delete_file(client, exam_id)
+                        # if rubric_id is None:
+                        #     print(f"  Uploading rubric ({rubric.page_count} pages)", flush=True)
+                        #     rubric_id = upload_pdf(client, rubric, options)
+                        # exam_id = None
+                        # try:
+                        #     print(f"  Uploading student PDF ({exam.page_count} pages)", flush=True)
+                        #     exam_id = upload_pdf(client, exam, options)
+                        #     result, meta = call_model(client, config, options, prompt, rubric_id, exam_id)
+                        # finally:
+                        #     delete_file(client, exam_id)
+                        print(f"  Grading student PDF ({exam.page_count} pages)...", flush=True)
+                        result, meta = call_model(client, config, options, prompt, rubric, exam)
                         save_result(output, result, expected, meta)
                         print(f"  Wrote {output}", flush=True)
                         if result["human_review_recommended"]:
