@@ -2,7 +2,7 @@
   "schema_version": 1,
   "exam_id": "SS_HS19",
   "exam_title": "Signals & Systems (151-0575-01) Exam - February 6th, 2020",
-  "approved_for_scoring": false,
+  "approved_for_scoring": true,
   "paths": {
     "manifest": "rubric_manifest.json",
     "rubric": "Rubrics/rubric.pdf",
