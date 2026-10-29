@@ -1,0 +1,26 @@
+{
+    "exam_id": "Exam001",
+    "expected_total_max_points": 10,
+    "items": [
+      {
+        "rubric_item": "1",
+        "rubric_name": "Question 1 Evaluation",
+        "max_points": 5,
+        "part_id": "1",
+        "problem_id": "1",
+        "score_mode": "continuous",
+        "notes": "Awards 5 points if answer is 'A'.",
+        "dependencies": []
+      },
+      {
+        "rubric_item": "2",
+        "rubric_name": "Question 2 Evaluation",
+        "max_points": 5,
+        "part_id": "2",
+        "problem_id": "2",
+        "score_mode": "continuous",
+        "notes": "Awards 5 points if answer is 'B'.",
+        "dependencies": []
+      }
+    ]
+  }
