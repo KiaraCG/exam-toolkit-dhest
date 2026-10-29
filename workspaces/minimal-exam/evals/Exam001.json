@@ -1,0 +1,20 @@
+{
+  "grades": [
+    {
+      "awarded_points": 5,
+      "explanation": "PDF p. 1: Student answered 'A'.",
+      "max_points": 5,
+      "rubric_item": "1",
+      "rubric_name": "Question 1 Evaluation"
+    },
+    {
+      "awarded_points": 5,
+      "explanation": "PDF p. 1: Student answered 'B'.",
+      "max_points": 5,
+      "rubric_item": "2",
+      "rubric_name": "Question 2 Evaluation"
+    }
+  ],
+  "human_review_recommended": false,
+  "human_review_reason": ""
+}
