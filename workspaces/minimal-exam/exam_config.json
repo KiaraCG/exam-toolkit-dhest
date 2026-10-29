@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "exam_id": "Exam001",
+  "exam_id": "Minimal_Exam",
   "exam_title": "Minimal Test Exam",
   "approved_for_scoring": true,
   "paths": {
     "manifest": "rubric_manifest.json",
-    "rubric": "minimal_rubric.pdf",
-    "prompt_template": "prompt_template.txt",
-    "prompt": "prompt.txt",
-    "exams": ".",
+    "rubric": "Rubrics/minimal_rubric.pdf",
+    "prompt_template": "Prompts/prompt_template.txt",
+    "prompt": "Prompts/prompt.txt",
+    "exams": "RawExams",
     "evals": "evals"
   },
   "filename_pattern": "^(?P<id>Exam\\d+)$",
