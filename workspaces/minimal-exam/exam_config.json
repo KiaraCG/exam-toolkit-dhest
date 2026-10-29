@@ -6,7 +6,7 @@
   "paths": {
     "manifest": "rubric_manifest.json",
     "rubric": "Rubrics/minimal_rubric.pdf",
-    "prompt_template": "Prompts/prompt_template.txt",
+    "prompt_template": "Prompts/prompt.template.txt",
     "prompt": "Prompts/prompt.txt",
     "exams": "RawExams",
     "evals": "evals"
