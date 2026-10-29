@@ -11,9 +11,9 @@
     "exams": "RawExams",
     "evals": "evals"
   },
-  "filename_pattern": "^(?P<id>Exam\\d+)$",
+  "filename_pattern": "^(?:(?:exam|student)_?)?(?P<id>[0-9]+)$",
   "identity_mode": "text",
-  "max_combined_pdf_bytes": 10000000,
+  "max_combined_pdf_bytes": 50000000,
   "rubric_validation": {
     "mode": "sha256",
     "approved_sha256": "62d724d4abb22d49ca288f0f74404a96e74797d3bb86a54d0aa85dcfffa4cd28"
