@@ -16,7 +16,7 @@
   "max_combined_pdf_bytes": 50000000,
   "rubric_validation": {
     "mode": "sha256",
-    "approved_sha256": "62d724d4abb22d49ca288f0f74404a96e74797d3bb86a54d0aa85dcfffa4cd28"
+    "approved_sha256": "de72c43ab931bb1d4b95fb8ed2dadeb920ff83d1998ff00ae50f5799368bcbfa"
   },
   "notes": "Minimal test configuration using SHA-256 validation mode."
 }
