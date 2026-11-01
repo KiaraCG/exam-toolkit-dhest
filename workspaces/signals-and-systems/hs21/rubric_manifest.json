@@ -1,0 +1,966 @@
+{
+  "exam_id": "SS_HS21",
+  "expected_total_max_points": 60,
+  "items": [
+    {
+      "rubric_item": "1.a",
+      "rubric_name": "MC question 1",
+      "max_points": 1,
+      "part_id": "1",
+      "problem_id": "1",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "A",
+      "correct_answer": "The resulting discretized system is always stable"
+    },
+    {
+      "rubric_item": "2.a",
+      "rubric_name": "MC question 2",
+      "max_points": 1,
+      "part_id": "2",
+      "problem_id": "2",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "E",
+      "correct_answer": "The resulting discretized system is always time-invariant"
+    },
+    {
+      "rubric_item": "3.a",
+      "rubric_name": "MC question 3",
+      "max_points": 1,
+      "part_id": "3",
+      "problem_id": "3",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "D",
+      "correct_answer": "In both Euler and Exact discretization, when Ts -> 0 then the state matrix A_d -> I"
+    },
+    {
+      "rubric_item": "4.a",
+      "rubric_name": "MC question 4",
+      "max_points": 1,
+      "part_id": "4",
+      "problem_id": "4",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "D",
+      "correct_answer": "k_r = 1"
+    },
+    {
+      "rubric_item": "5.a",
+      "rubric_name": "MC question 5",
+      "max_points": 1,
+      "part_id": "5",
+      "problem_id": "5",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "E",
+      "correct_answer": "Ts >= 0"
+    },
+    {
+      "rubric_item": "6.a",
+      "rubric_name": "MC question 6",
+      "max_points": 1,
+      "part_id": "6",
+      "problem_id": "6",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "D",
+      "correct_answer": "Omega_1 = pi/25"
+    },
+    {
+      "rubric_item": "7.a",
+      "rubric_name": "MC question 7",
+      "max_points": 1,
+      "part_id": "7",
+      "problem_id": "7",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "A",
+      "correct_answer": "N_2 = 60"
+    },
+    {
+      "rubric_item": "8.a",
+      "rubric_name": "MC question 8",
+      "max_points": 1,
+      "part_id": "8",
+      "problem_id": "8",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "E",
+      "correct_answer": "N = 112"
+    },
+    {
+      "rubric_item": "9.a",
+      "rubric_name": "MC question 9",
+      "max_points": 1,
+      "part_id": "9",
+      "problem_id": "9",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "O",
+      "correct_answer": "G_A, G_B, G_C, G_D"
+    },
+    {
+      "rubric_item": "10.a",
+      "rubric_name": "MC question 10",
+      "max_points": 1,
+      "part_id": "10",
+      "problem_id": "10",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "K",
+      "correct_answer": "G_A, G_B, G_C"
+    },
+    {
+      "rubric_item": "11.a",
+      "rubric_name": "MC question 11",
+      "max_points": 1,
+      "part_id": "11",
+      "problem_id": "11",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "E",
+      "correct_answer": "G_A, G_B"
+    },
+    {
+      "rubric_item": "12.a",
+      "rubric_name": "MC question 12",
+      "max_points": 1,
+      "part_id": "12",
+      "problem_id": "12",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "A",
+      "correct_answer": "G_A"
+    },
+    {
+      "rubric_item": "13.a",
+      "rubric_name": "MC question 13",
+      "max_points": 1,
+      "part_id": "13",
+      "problem_id": "13",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "F",
+      "correct_answer": "{h[n]} = {..., 0, 1 (n=0), -2/3, 2/3, 0, 0, ...}"
+    },
+    {
+      "rubric_item": "14.a",
+      "rubric_name": "MC question 14",
+      "max_points": 1,
+      "part_id": "14",
+      "problem_id": "14",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "E",
+      "correct_answer": "The system G is causal and stable."
+    },
+    {
+      "rubric_item": "15.a",
+      "rubric_name": "MC question 15",
+      "max_points": 1,
+      "part_id": "15",
+      "problem_id": "15",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "B",
+      "correct_answer": "The system G is unstable and causal"
+    },
+    {
+      "rubric_item": "16.a",
+      "rubric_name": "MC question 16",
+      "max_points": 1,
+      "part_id": "16",
+      "problem_id": "16",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "G",
+      "correct_answer": "The output matrix of the system G is c = 2"
+    },
+    {
+      "rubric_item": "17.a",
+      "rubric_name": "MC question 17",
+      "max_points": 1,
+      "part_id": "17",
+      "problem_id": "17",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "A",
+      "correct_answer": "None of the other statements is correct"
+    },
+    {
+      "rubric_item": "18.a",
+      "rubric_name": "MC question 18",
+      "max_points": 1,
+      "part_id": "18",
+      "problem_id": "18",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "F",
+      "correct_answer": "|z| > |a|, |z| > |b|"
+    },
+    {
+      "rubric_item": "19.a",
+      "rubric_name": "MC question 19",
+      "max_points": 1,
+      "part_id": "19",
+      "problem_id": "19",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "E",
+      "correct_answer": "a = b"
+    },
+    {
+      "rubric_item": "20.a",
+      "rubric_name": "MC question 20",
+      "max_points": 1,
+      "part_id": "20",
+      "problem_id": "20",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "E",
+      "correct_answer": "b = 1 +/- sqrt(2)/2"
+    },
+    {
+      "rubric_item": "21.a",
+      "rubric_name": "MC question 21",
+      "max_points": 1,
+      "part_id": "21",
+      "problem_id": "21",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "D",
+      "correct_answer": "If G_1 and G_2 have a finite impulse response then G_3 has a finite impulse response"
+    },
+    {
+      "rubric_item": "22.a",
+      "rubric_name": "MC question 22",
+      "max_points": 1,
+      "part_id": "22",
+      "problem_id": "22",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "C",
+      "correct_answer": "h_3[0] = 1"
+    },
+    {
+      "rubric_item": "23.a",
+      "rubric_name": "MC question 23",
+      "max_points": 1,
+      "part_id": "23",
+      "problem_id": "23",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "E",
+      "correct_answer": "a = 2, b = 1, and c = -1"
+    },
+    {
+      "rubric_item": "24.a",
+      "rubric_name": "MC question 24",
+      "max_points": 1,
+      "part_id": "24",
+      "problem_id": "24",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "A",
+      "correct_answer": "W(z) = (dz + cb - da) / b"
+    },
+    {
+      "rubric_item": "25.a",
+      "rubric_name": "MC question 25",
+      "max_points": 1,
+      "part_id": "25",
+      "problem_id": "25",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "A",
+      "correct_answer": "a = 0.5, b = 0.5, c = 1, d = 1"
+    },
+    {
+      "rubric_item": "26.a",
+      "rubric_name": "MC question 26",
+      "max_points": 1,
+      "part_id": "26",
+      "problem_id": "26",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "A",
+      "correct_answer": "Plot A"
+    },
+    {
+      "rubric_item": "27.a",
+      "rubric_name": "MC question 27",
+      "max_points": 1,
+      "part_id": "27",
+      "problem_id": "27",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "F",
+      "correct_answer": "Ts = 0.5"
+    },
+    {
+      "rubric_item": "28.a",
+      "rubric_name": "MC question 28",
+      "max_points": 1,
+      "part_id": "28",
+      "problem_id": "28",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "D",
+      "correct_answer": "N = 500"
+    },
+    {
+      "rubric_item": "29.a",
+      "rubric_name": "MC question 29",
+      "max_points": 1,
+      "part_id": "29",
+      "problem_id": "29",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "D",
+      "correct_answer": "Plot D"
+    },
+    {
+      "rubric_item": "30.a",
+      "rubric_name": "MC question 30",
+      "max_points": 1,
+      "part_id": "30",
+      "problem_id": "30",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "B",
+      "correct_answer": "Plot B"
+    },
+    {
+      "rubric_item": "31.a",
+      "rubric_name": "MC question 31",
+      "max_points": 1,
+      "part_id": "31",
+      "problem_id": "31",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "F",
+      "correct_answer": "Plot F"
+    },
+    {
+      "rubric_item": "32.a",
+      "rubric_name": "MC question 32",
+      "max_points": 1,
+      "part_id": "32",
+      "problem_id": "32",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "J",
+      "correct_answer": "y[n] = delta[n] + delta[n-1]"
+    },
+    {
+      "rubric_item": "33.a",
+      "rubric_name": "MC question 33",
+      "max_points": 1,
+      "part_id": "33",
+      "problem_id": "33",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "A",
+      "correct_answer": "The sequence {x[n]} is not absolutely summable."
+    },
+    {
+      "rubric_item": "34.a",
+      "rubric_name": "MC question 34",
+      "max_points": 1,
+      "part_id": "34",
+      "problem_id": "34",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "F",
+      "correct_answer": "{U_3[k]} = {0, -2j, 4, 2j}"
+    },
+    {
+      "rubric_item": "35.a",
+      "rubric_name": "MC question 35",
+      "max_points": 1,
+      "part_id": "35",
+      "problem_id": "35",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "C",
+      "correct_answer": "alpha_1 = 1, alpha_2 = 3"
+    },
+    {
+      "rubric_item": "36.a",
+      "rubric_name": "MC question 36",
+      "max_points": 1,
+      "part_id": "36",
+      "problem_id": "36",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "B",
+      "correct_answer": "{Y_3[k]} = {0, 0, 8, 0}"
+    },
+    {
+      "rubric_item": "37.a",
+      "rubric_name": "MC question 37",
+      "max_points": 1,
+      "part_id": "37",
+      "problem_id": "37",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "C",
+      "correct_answer": "Plot C"
+    },
+    {
+      "rubric_item": "38.a",
+      "rubric_name": "MC question 38",
+      "max_points": 1,
+      "part_id": "38",
+      "problem_id": "38",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "C",
+      "correct_answer": "y[n] = 2"
+    },
+    {
+      "rubric_item": "39.a",
+      "rubric_name": "MC question 39",
+      "max_points": 1,
+      "part_id": "39",
+      "problem_id": "39",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "B",
+      "correct_answer": "Plot B"
+    },
+    {
+      "rubric_item": "40.a",
+      "rubric_name": "MC question 40",
+      "max_points": 1,
+      "part_id": "40",
+      "problem_id": "40",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "C",
+      "correct_answer": "Plot C"
+    },
+    {
+      "rubric_item": "41.a",
+      "rubric_name": "MC question 41",
+      "max_points": 1,
+      "part_id": "41",
+      "problem_id": "41",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "A",
+      "correct_answer": "Y_1[0] >= Y_2[0]"
+    },
+    {
+      "rubric_item": "42.a",
+      "rubric_name": "MC question 42",
+      "max_points": 1,
+      "part_id": "42",
+      "problem_id": "42",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "D",
+      "correct_answer": "sum_{k=0}^{1} Y_1[k] = sum_{k=0}^{1} Y_2[k]"
+    },
+    {
+      "rubric_item": "43.a",
+      "rubric_name": "MC question 43",
+      "max_points": 1,
+      "part_id": "43",
+      "problem_id": "43",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "A",
+      "correct_answer": "G_A"
+    },
+    {
+      "rubric_item": "44.a",
+      "rubric_name": "MC question 44",
+      "max_points": 1,
+      "part_id": "44",
+      "problem_id": "44",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "C",
+      "correct_answer": "G_C"
+    },
+    {
+      "rubric_item": "45.a",
+      "rubric_name": "MC question 45",
+      "max_points": 1,
+      "part_id": "45",
+      "problem_id": "45",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "B",
+      "correct_answer": "G_B"
+    },
+    {
+      "rubric_item": "46.a",
+      "rubric_name": "MC question 46",
+      "max_points": 1,
+      "part_id": "46",
+      "problem_id": "46",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "D",
+      "correct_answer": "High-pass filter"
+    },
+    {
+      "rubric_item": "47.a",
+      "rubric_name": "MC question 47",
+      "max_points": 1,
+      "part_id": "47",
+      "problem_id": "47",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "A",
+      "correct_answer": "Band-stop filter"
+    },
+    {
+      "rubric_item": "48.a",
+      "rubric_name": "MC question 48",
+      "max_points": 1,
+      "part_id": "48",
+      "problem_id": "48",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "B",
+      "correct_answer": "k = 10 and k = 91"
+    },
+    {
+      "rubric_item": "49.a",
+      "rubric_name": "MC question 49",
+      "max_points": 1,
+      "part_id": "49",
+      "problem_id": "49",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "F",
+      "correct_answer": "k >= 20 and k <= 81"
+    },
+    {
+      "rubric_item": "50.a",
+      "rubric_name": "MC question 50",
+      "max_points": 1,
+      "part_id": "50",
+      "problem_id": "50",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "D",
+      "correct_answer": "Even if x[n] didn't experience aliasing then down-sampling x[n] can cause aliasing"
+    },
+    {
+      "rubric_item": "51.a",
+      "rubric_name": "MC question 51",
+      "max_points": 1,
+      "part_id": "51",
+      "problem_id": "51",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "A",
+      "correct_answer": "Y_1[k] = {3, 0, 0}"
+    },
+    {
+      "rubric_item": "52.a",
+      "rubric_name": "MC question 52",
+      "max_points": 1,
+      "part_id": "52",
+      "problem_id": "52",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "E",
+      "correct_answer": "y_2[n] = 1 + alpha cos(2pi/5)"
+    },
+    {
+      "rubric_item": "53.a",
+      "rubric_name": "MC question 53",
+      "max_points": 1,
+      "part_id": "53",
+      "problem_id": "53",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "C",
+      "correct_answer": "y_2[n] = 1 + alpha cos(2pi/3 + pi)"
+    },
+    {
+      "rubric_item": "54.a",
+      "rubric_name": "MC question 54",
+      "max_points": 1,
+      "part_id": "54",
+      "problem_id": "54",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "D",
+      "correct_answer": "w_c = 6"
+    },
+    {
+      "rubric_item": "55.a",
+      "rubric_name": "MC question 55",
+      "max_points": 1,
+      "part_id": "55",
+      "problem_id": "55",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "D",
+      "correct_answer": "f(z) = z^2"
+    },
+    {
+      "rubric_item": "56.a",
+      "rubric_name": "MC question 56",
+      "max_points": 1,
+      "part_id": "56",
+      "problem_id": "56",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "E",
+      "correct_answer": "Omega_0^des = arctan((1 + z_p) / (1 - z_p)), and Omega_1^des = arctan((1 + z_p) / (1 - z_p)) + pi"
+    },
+    {
+      "rubric_item": "57.a",
+      "rubric_name": "MC question 57",
+      "max_points": 1,
+      "part_id": "57",
+      "problem_id": "57",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "D",
+      "correct_answer": "f(s) = s / (s^2 + w_0 w_1)"
+    },
+    {
+      "rubric_item": "58.a",
+      "rubric_name": "MC question 58",
+      "max_points": 1,
+      "part_id": "58",
+      "problem_id": "58",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "A",
+      "correct_answer": "H_LP(s) = 0.04 / (s^2 + 0.2828s + 0.04)"
+    },
+    {
+      "rubric_item": "59.a",
+      "rubric_name": "MC question 59",
+      "max_points": 1,
+      "part_id": "59",
+      "problem_id": "59",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "A",
+      "correct_answer": "a = 2"
+    },
+    {
+      "rubric_item": "60.a",
+      "rubric_name": "MC question 60",
+      "max_points": 1,
+      "part_id": "60",
+      "problem_id": "60",
+      "score_mode": "allowed",
+      "notes": "Single choice, all-or-nothing; no justification required.",
+      "dependencies": [],
+      "allowed_points": [
+        0,
+        1
+      ],
+      "correct_option": "B",
+      "correct_answer": "A = 0.1"
+    }
+  ]
+}

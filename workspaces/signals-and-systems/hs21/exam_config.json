@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "exam_id": "SS_HS21",
+  "exam_title": "Signals & Systems (151-0575-01) Exam - February 8th, 2022",
+  "approved_for_scoring": false,
+  "paths": {
+    "manifest": "rubric_manifest.json",
+    "rubric": "Rubrics/rubric.pdf",
+    "prompt_template": "Prompts/prompt.template.txt",
+    "prompt": "Prompts/prompt.txt",
+    "exams": "RawExams",
+    "evals": "evals"
+  },
+  "filename_pattern": "^(?:(?:exam|student)_?)?(?P<id>[0-9]+)$",
+  "identity_mode": "numeric",
+  "max_combined_pdf_bytes": 50000000,
+  "rubric_validation": {
+    "mode": "headings",
+    "approved_sha256": ""
+  },
+  "notes": "Benchmark setting: each submission contains the answers of an AI model, not a student, typed and labelled by question number (e.g. 'Question 12'). All 60 questions are single choice, 1 point each, all-or-nothing, with exactly one correct answer; no justification is required and calculations are not graded. Compare the submitted answer with the key (option text; the option letter refers to the order listed in the rubric). An answer that matches the key text in substance (e.g. formatting differences) is correct. No negative marking."
+}
