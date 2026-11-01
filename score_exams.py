@@ -10,7 +10,6 @@ scores are skipped ONLY when valid and matched to a provenance sidecar. Use a
 fresh --output-dir for changed inputs/settings; old source JSON is never edited.
 The contract remains grades + exam-level human_review_recommended/reason.
 """
-
 from __future__ import annotations
 import argparse
 import base64
@@ -194,6 +193,22 @@ def delete_file(client: Any, identifier: str | dict | None) -> None:
                   "Inspect provider storage and remove it manually.", file=sys.stderr)
 
 
+def extract_json_text(raw: str) -> str:
+    """Return the JSON object inside a model reply: strips markdown fences and any
+    prose or reasoning before the first '{' / after the last '}'. If no braces are
+    found the reply is returned unchanged, so parsing still fails loudly."""
+    text = raw.strip()
+    if text.startswith("```"):
+        lines = text.splitlines()[1:]
+        if lines and lines[-1].strip().startswith("```"):
+            lines = lines[:-1]
+        text = "\n".join(lines).strip()
+    start, end = text.find("{"), text.rfind("}")
+    if start != -1 and end > start:
+        text = text[start:end + 1]
+    return text
+
+
 def align_to_manifest(result: Any, config: Config) -> Any:
     """Copy rubric_name/max_points from the manifest (matched by rubric_item) and
     restore manifest order. Awarded points and explanations are left untouched,
@@ -266,17 +281,14 @@ def call_model(client: Any, config: Config, options: Settings, prompt: str,
     if not isinstance(raw, str) or not raw.strip():
         raise ExamError("Model returned no grade JSON")
 
-    # Strip markdown code fences if the model wrapped the JSON
-    cleaned_raw = raw.strip()
-    if cleaned_raw.startswith("```"):
-        lines = cleaned_raw.splitlines()
-        if lines[0].startswith("```"):
-            lines = lines[1:]
-        if lines and lines[-1].startswith("```"):
-            lines = lines[:-1]
-        cleaned_raw = "\n".join(lines).strip()
-         
-    result = validate_result(align_to_manifest(strict_loads(cleaned_raw), config), config)
+    try:
+        result = validate_result(align_to_manifest(strict_loads(extract_json_text(raw)), config), config)
+    except ExamError:
+        # Keep the unparseable/invalid reply for debugging (model text only, no credentials).
+        debug = config.root / "debug_last_response.txt"
+        debug.write_text(raw, encoding="utf-8")
+        print(f"  Raw model reply saved to {debug}", file=sys.stderr, flush=True)
+        raise
     usage = getattr(response, "usage", None)
     meta = {
         "response_id": getattr(response, "id", None),
