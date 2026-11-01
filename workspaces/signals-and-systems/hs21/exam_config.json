@@ -15,8 +15,8 @@
   "identity_mode": "numeric",
   "max_combined_pdf_bytes": 50000000,
   "rubric_validation": {
-    "mode": "headings",
-    "approved_sha256": ""
+    "mode": "sha256",
+    "approved_sha256": "044b233228cbfa5d38f2bb0e06bf916d80b56ade0656b4f750a46772b1564975"
   },
   "notes": "Benchmark setting: each submission contains the answers of an AI model, not a student, typed and labelled by question number (e.g. 'Question 12'). All 60 questions are single choice, 1 point each, all-or-nothing, with exactly one correct answer; no justification is required and calculations are not graded. Compare the submitted answer with the key (option text; the option letter refers to the order listed in the rubric). An answer that matches the key text in substance (e.g. formatting differences) is correct. No negative marking."
 }
