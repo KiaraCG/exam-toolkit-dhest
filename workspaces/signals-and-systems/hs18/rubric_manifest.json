@@ -1,0 +1,164 @@
+{
+  "exam_id": "SS_HS18",
+  "expected_total_max_points": 55,
+  "items": [
+    {
+      "rubric_item": "1.1.a",
+      "rubric_name": "Stable sampling times",
+      "max_points": 3,
+      "part_id": "1.1",
+      "problem_id": "1",
+      "score_mode": "step",
+      "score_step": 0.5,
+      "notes": "Award partial credit according to the official point allocation in the rubric.",
+      "dependencies": []
+    },
+    {
+      "rubric_item": "1.2.a",
+      "rubric_name": "Euler equals exact",
+      "max_points": 3,
+      "part_id": "1.2",
+      "problem_id": "1",
+      "score_mode": "step",
+      "score_step": 0.5,
+      "notes": "Award partial credit according to the official point allocation in the rubric.",
+      "dependencies": []
+    },
+    {
+      "rubric_item": "2.a",
+      "rubric_name": "System properties",
+      "max_points": 6,
+      "part_id": "2",
+      "problem_id": "2",
+      "score_mode": "step",
+      "score_step": 0.5,
+      "notes": "Award partial credit according to the official point allocation in the rubric.",
+      "dependencies": []
+    },
+    {
+      "rubric_item": "3.1.a",
+      "rubric_name": "Output of G2",
+      "max_points": 3,
+      "part_id": "3.1",
+      "problem_id": "3",
+      "score_mode": "step",
+      "score_step": 0.5,
+      "notes": "Award partial credit according to the official point allocation in the rubric.",
+      "dependencies": []
+    },
+    {
+      "rubric_item": "3.2.a",
+      "rubric_name": "Output of the cascade",
+      "max_points": 5,
+      "part_id": "3.2",
+      "problem_id": "3",
+      "score_mode": "step",
+      "score_step": 0.5,
+      "notes": "Award partial credit according to the official point allocation in the rubric.",
+      "dependencies": [
+        "3.1.a"
+      ]
+    },
+    {
+      "rubric_item": "4.a",
+      "rubric_name": "Signal r[n]",
+      "max_points": 6,
+      "part_id": "4",
+      "problem_id": "4",
+      "score_mode": "step",
+      "score_step": 0.5,
+      "notes": "Award partial credit according to the official point allocation in the rubric.",
+      "dependencies": []
+    },
+    {
+      "rubric_item": "5.1.a",
+      "rubric_name": "Periodicity of z[n]",
+      "max_points": 2,
+      "part_id": "5.1",
+      "problem_id": "5",
+      "score_mode": "step",
+      "score_step": 0.5,
+      "notes": "Award partial credit according to the official point allocation in the rubric.",
+      "dependencies": []
+    },
+    {
+      "rubric_item": "5.2.a",
+      "rubric_name": "DFS of z[n]",
+      "max_points": 3,
+      "part_id": "5.2",
+      "problem_id": "5",
+      "score_mode": "step",
+      "score_step": 0.5,
+      "notes": "Award partial credit according to the official point allocation in the rubric.",
+      "dependencies": [
+        "5.1.a"
+      ]
+    },
+    {
+      "rubric_item": "6.a",
+      "rubric_name": "Filter design",
+      "max_points": 10,
+      "part_id": "6",
+      "problem_id": "6",
+      "score_mode": "step",
+      "score_step": 0.5,
+      "notes": "Award partial credit according to the official point allocation in the rubric.",
+      "dependencies": []
+    },
+    {
+      "rubric_item": "7.a",
+      "rubric_name": "Identify a1 and b0",
+      "max_points": 6,
+      "part_id": "7",
+      "problem_id": "7",
+      "score_mode": "step",
+      "score_step": 0.5,
+      "notes": "Award partial credit according to the official point allocation in the rubric.",
+      "dependencies": []
+    },
+    {
+      "rubric_item": "8.1.a",
+      "rubric_name": "Pair 1 complex exponential",
+      "max_points": 2,
+      "part_id": "8.1",
+      "problem_id": "8",
+      "score_mode": "step",
+      "score_step": 0.5,
+      "notes": "Award partial credit according to the official point allocation in the rubric.",
+      "dependencies": []
+    },
+    {
+      "rubric_item": "8.2.a",
+      "rubric_name": "Pair 2 causal cosine",
+      "max_points": 2,
+      "part_id": "8.2",
+      "problem_id": "8",
+      "score_mode": "step",
+      "score_step": 0.5,
+      "notes": "Award partial credit according to the official point allocation in the rubric.",
+      "dependencies": []
+    },
+    {
+      "rubric_item": "8.3.a",
+      "rubric_name": "Pair 3 periodic signals",
+      "max_points": 2,
+      "part_id": "8.3",
+      "problem_id": "8",
+      "score_mode": "step",
+      "score_step": 0.5,
+      "notes": "Award partial credit according to the official point allocation in the rubric.",
+      "dependencies": []
+    },
+    {
+      "rubric_item": "8.4.a",
+      "rubric_name": "Pair 4 periodic signals",
+      "max_points": 2,
+      "part_id": "8.4",
+      "problem_id": "8",
+      "score_mode": "step",
+      "score_step": 0.5,
+      "notes": "Award partial credit according to the official point allocation in the rubric.",
+      "dependencies": []
+    }
+  ]
+}
