@@ -10,6 +10,7 @@ scores are skipped ONLY when valid and matched to a provenance sidecar. Use a
 fresh --output-dir for changed inputs/settings; old source JSON is never edited.
 The contract remains grades + exam-level human_review_recommended/reason.
 """
+
 from __future__ import annotations
 import argparse
 import base64
@@ -193,6 +194,26 @@ def delete_file(client: Any, identifier: str | dict | None) -> None:
                   "Inspect provider storage and remove it manually.", file=sys.stderr)
 
 
+def align_to_manifest(result: Any, config: Config) -> Any:
+    """Copy rubric_name/max_points from the manifest (matched by rubric_item) and
+    restore manifest order. Awarded points and explanations are left untouched,
+    so validate_result still enforces score modes, ranges and completeness."""
+    if not isinstance(result, dict) or not isinstance(result.get("grades"), list):
+        return result
+    manifest = load_json(config.file("manifest"))
+    spec = {i["rubric_item"]: i for i in manifest["items"]}
+    by_id = {}
+    for g in result["grades"]:
+        if isinstance(g, dict) and g.get("rubric_item") in spec:
+            item = spec[g["rubric_item"]]
+            g["rubric_name"] = item["rubric_name"]
+            g["max_points"] = item["max_points"]
+            by_id.setdefault(g["rubric_item"], g)
+    if len(by_id) == len(spec) == len(result["grades"]):
+        result["grades"] = [by_id[i["rubric_item"]] for i in manifest["items"]]
+    return result
+
+
 def call_model(client: Any, config: Config, options: Settings, prompt: str,
                rubric: PDFInput, exam: PDFInput) -> tuple[dict[str, Any], dict[str, Any]]:
     print("  Rendering rubric pages to images...", flush=True)
@@ -255,7 +276,7 @@ def call_model(client: Any, config: Config, options: Settings, prompt: str,
             lines = lines[:-1]
         cleaned_raw = "\n".join(lines).strip()
          
-    result = validate_result(strict_loads(raw), config)
+    result = validate_result(align_to_manifest(strict_loads(cleaned_raw), config), config)
     usage = getattr(response, "usage", None)
     meta = {
         "response_id": getattr(response, "id", None),
