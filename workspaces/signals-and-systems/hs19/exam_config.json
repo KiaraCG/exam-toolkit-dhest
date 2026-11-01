@@ -15,7 +15,7 @@
   "identity_mode": "numeric",
   "max_combined_pdf_bytes": 50000000,
   "rubric_validation": {
-    "mode": "headings",
+    "mode": "sha256",
     "approved_sha256": "c565e480c0afc4f3b658e8dec4e5e625f83bcae918012935e81a64e272b716f8"
   },
   "notes": "Benchmark setting: each submission contains the answers of an AI model, not a student, typed and labelled by question part (e.g. 'Question 3.1'). The rubric is a compact text version of the official corrected solution, with reference answers and the official point allocations; follow them for partial credit. Multiple-choice and true/false parts are all-or-nothing. No negative marking. No final grade conversion."
