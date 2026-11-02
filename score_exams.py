@@ -28,7 +28,7 @@ from exam_common import (VERSION, Config, ExamError, discover, generated_prompt,
                          json_bytes, load_config, load_json, output_schema,
                          sha256, strict_loads, validate_result, write_new)
 from pdf_inputs import PDFInput, check_pair, read_pdf, validate_rubric
-from utils import render_pdf_to_image_parts
+from utils import render_pdf_to_image_parts, extract_pdf_text
 
 @dataclass(frozen=True)
 class Settings:
@@ -42,17 +42,16 @@ class Settings:
     pdf_detail: str
     api_key: str = field(repr=False)
     pdf_transport: str = "files"
-
+    rubric_mode: str = "text"
+    exam_mode: str = "text"
+    
     def public_record(self) -> dict[str, Any]:
-        # No API key, key hash, or raw .env text is recorded. Endpoint is hashed
-        # because resource names may themselves be internal information.
         return {"provider": self.provider, "endpoint_sha256": sha256(self.endpoint.encode()),
                 "deployment": self.deployment, "reasoning_effort": self.effort,
                 "max_output_tokens": self.max_tokens, "timeout_seconds": self.timeout,
                 "sdk_max_retries": self.retries, "pdf_detail": self.pdf_detail,
-                # Recorded only when non-default so existing provenance still matches.
-                **({"pdf_transport": self.pdf_transport} if self.pdf_transport != "files" else {})}
-
+                **({"pdf_transport": self.pdf_transport} if self.pdf_transport != "files" else {}),
+                "rubric_mode": self.rubric_mode, "exam_mode": self.exam_mode}
 
 def required_env(key: str) -> str:
     value = os.getenv(key, "").strip()
@@ -228,27 +227,35 @@ def align_to_manifest(result: Any, config: Config) -> Any:
         result["grades"] = [by_id[i["rubric_item"]] for i in manifest["items"]]
     return result
 
+def build_pdf_content(pdf: PDFInput, mode: str, header: str, label: str) -> tuple[list[dict[str, Any]], int]:
+    """Return (content parts, number of text characters sent). Always starts with a text label."""
+    if mode == "text":
+        try:
+            text = extract_pdf_text(pdf.data, label)
+        except ValueError as exc:
+            raise ExamError(str(exc)) from exc
+        return [{"type": "text", "text": f"{header}\n{text}"}], len(text)
+    images = render_pdf_to_image_parts(pdf.data, label)
+    return [{"type": "text", "text": f"{header} ({len(images)} page images follow)"}] + images, 0
+
 
 def call_model(client: Any, config: Config, options: Settings, prompt: str,
                rubric: PDFInput, exam: PDFInput) -> tuple[dict[str, Any], dict[str, Any]]:
-    print("  Rendering rubric pages to images...", flush=True)
-    rubric_parts = render_pdf_to_image_parts(rubric.data)
-    print(f"  Rendering student exam pages ({exam.page_count} pages) to images...", flush=True)
-    exam_parts = render_pdf_to_image_parts(exam.data)
+    print(f"  Preparing rubric ({options.rubric_mode}) and exam ({options.exam_mode})...", flush=True)
+    rubric_content, rubric_chars = build_pdf_content(
+        rubric, options.rubric_mode, "FILE 1 - APPROVED RUBRIC:", "rubric")
+    exam_content, exam_chars = build_pdf_content(
+        exam, options.exam_mode, "FILE 2 - COMPLETE STUDENT EXAM:", "exam")
 
     instruction_text = (
-        f"The first {len(rubric_parts)} images are the approved rubric. "
-        f"The remaining {len(exam_parts)} images are one complete student exam. "
-        "Read every page and grade exactly the manifest items. Return only the required JSON."
+        "FILE 1 is the approved rubric and answer key. FILE 2 is one complete student exam. "
+        "Read every page of FILE 2 and grade exactly the manifest items. "
+        "If you cannot see FILE 2, say so in human_review_reason; otherwise return only the required JSON."
     )
-
-    # Combine instructions and image parts into standard chat messages format
     messages = [
         {"role": "system", "content": prompt},
-        {
-            "role": "user",
-            "content": rubric_parts + exam_parts + [{"type": "text", "text": instruction_text}]
-        }
+        {"role": "user", "content": rubric_content + exam_content
+                                    + [{"type": "text", "text": instruction_text}]},
     ]
 
     request = dict(
@@ -257,56 +264,57 @@ def call_model(client: Any, config: Config, options: Settings, prompt: str,
         max_tokens=options.max_tokens,
         response_format={
             "type": "json_schema",
-            "json_schema": {
-                "name": "exam_grade",
-                "strict": True,
-                "schema": output_schema(config)
-            }
-        }
+            "json_schema": {"name": "exam_grade", "strict": True, "schema": output_schema(config)},
+        },
     )
     if options.effort:
         request["reasoning_effort"] = options.effort
 
-    print("  Images prepared; waiting for the scoring response from Swiss AI (non-streaming)...", flush=True)
+    n_images = sum(1 for part in rubric_content + exam_content if part.get("type") == "image_url")
+    print(f"  Sending request: {n_images} images, {rubric_chars + exam_chars} text chars; "
+          "waiting for the scoring response (non-streaming)...", flush=True)
     start = time.monotonic()
-    
-    # Use standard chat completions endpoint
     response = client.chat.completions.create(**request)
-    
+
     choice = response.choices[0]
     if getattr(choice, "finish_reason", None) == "content_filter":
         raise ExamError("Model refused or content filtered; no grade saved")
-    
-    # Catch length truncation explicitly
     if getattr(choice, "finish_reason", None) == "length":
-        raise ExamError(
-            "Model response was truncated due to output token length limits "
-            "(finish_reason='length'). Increase the output token cap or shorten explanations."
-        )
+        raise ExamError("Model response was truncated (finish_reason='length'). "
+                        "Increase the output token cap or shorten explanations.")
 
     raw = choice.message.content
     if not isinstance(raw, str) or not raw.strip():
         raise ExamError("Model returned no grade JSON")
 
+    usage = getattr(response, "usage", None)
+    prompt_tokens = getattr(usage, "prompt_tokens", None)
+    print(f"  Prompt tokens reported by provider: {prompt_tokens}", flush=True)
+    # Sanity guard: text alone is roughly chars/4 tokens. Far fewer means content was dropped.
+    if isinstance(prompt_tokens, int) and prompt_tokens < (rubric_chars + exam_chars) // 8:
+        debug = config.root / "debug_last_response.txt"
+        debug.write_text(raw, encoding="utf-8")
+        raise ExamError(f"Provider reported only {prompt_tokens} prompt tokens for "
+                        f"{rubric_chars + exam_chars} characters of text; input was likely truncated")
+
     try:
         result = validate_result(align_to_manifest(strict_loads(extract_json_text(raw)), config), config)
     except ExamError:
-        # Keep the unparseable/invalid reply for debugging (model text only, no credentials).
         debug = config.root / "debug_last_response.txt"
         debug.write_text(raw, encoding="utf-8")
         print(f"  Raw model reply saved to {debug}", file=sys.stderr, flush=True)
         raise
-    usage = getattr(response, "usage", None)
+
     meta = {
         "response_id": getattr(response, "id", None),
         "reported_model": getattr(response, "model", None),
         "elapsed_seconds": round(time.monotonic() - start, 3),
-        "input_tokens": getattr(usage, "prompt_tokens", None),
-        "output_tokens": getattr(usage, "completion_tokens", None)
+        "input_tokens": prompt_tokens,
+        "output_tokens": getattr(usage, "completion_tokens", None),
     }
     print(f"  Response received after {meta['elapsed_seconds']} s; {meta['response_id']}", flush=True)
     return result, meta
-
+    
 def save_result(output: Path, result: dict[str, Any], expected: dict[str, Any], meta: dict[str, Any]) -> None:
     raw = json_bytes(result)
     record = {"schema_version": 1, "completed_at_utc": datetime.now(timezone.utc).isoformat(),
@@ -326,6 +334,8 @@ def parse_args(argv=None):
     group.add_argument("--student", help="Exact id group, preserving leading zeros")
     p.add_argument("--output-dir", type=Path, help="Override evals directory; relative to shell cwd")
     p.add_argument("--version", action="version", version=VERSION)
+    p.add_argument("--rubric-mode", choices=["text", "images"], default="text")
+    p.add_argument("--exam-mode", choices=["text", "images"], default="text")
     args = p.parse_args(argv)
     if args.exam is not None and (Path(args.exam).name != args.exam or not args.exam.lower().endswith(".pdf")):
         p.error("--exam must be one PDF filename, not a path")
@@ -352,6 +362,8 @@ def main(argv=None) -> int:
     if not args.check and not config.raw["approved_for_scoring"]:
         raise ExamError("Live scoring blocked: approved_for_scoring is false. Complete the human approval checklist first")
     options = None if args.check else settings(config.root)
+    if options:
+        options = dataclasses.replace(options, rubric_mode=args.rubric_mode, exam_mode=args.exam_mode)
     request_record = options.public_record() if options else None
     print(f"{VERSION}: {config.raw['exam_id']}, {len(config.items)} criteria, {config.total} points")
     print(f"Input: {config.file('exams')}; output: {destination}")
@@ -410,16 +422,6 @@ def main(argv=None) -> int:
                             print(f"Skip {path.name}: another worker completed it")
                             continue
                         print(f"[{n}/{len(pending)}] Grade {path.name}", flush=True)
-                        # if rubric_id is None:
-                        #     print(f"  Uploading rubric ({rubric.page_count} pages)", flush=True)
-                        #     rubric_id = upload_pdf(client, rubric, options)
-                        # exam_id = None
-                        # try:
-                        #     print(f"  Uploading student PDF ({exam.page_count} pages)", flush=True)
-                        #     exam_id = upload_pdf(client, exam, options)
-                        #     result, meta = call_model(client, config, options, prompt, rubric_id, exam_id)
-                        # finally:
-                        #     delete_file(client, exam_id)
                         print(f"  Grading student PDF ({exam.page_count} pages)...", flush=True)
                         result, meta = call_model(client, config, options, prompt, rubric, exam)
                         save_result(output, result, expected, meta)

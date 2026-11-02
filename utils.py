@@ -2,6 +2,14 @@ import fitz
 import base64
 from typing import Any
 
+def extract_pdf_text(pdf_bytes: bytes) -> str:
+    doc = fitz.open(stream=pdf_bytes, filetype="pdf")
+    pages = [f"--- page {i+1} ---\n{p.get_text()}" for i, p in enumerate(doc)]
+    text = "\n".join(pages)
+    if len(text.strip()) < 200 * len(doc):   # likely scanned, no text layer
+        raise ValueError("Little or no extractable text; use image mode for this PDF")
+    return text
+    
 def render_pdf_to_image_parts(pdf_bytes: bytes, label: str = "PDF") -> list[dict[str, Any]]:
     """Render each page of a PDF into a base64 JPEG image part for vision models."""
     doc = fitz.open(stream=pdf_bytes, filetype="pdf")
