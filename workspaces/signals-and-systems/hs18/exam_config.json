@@ -15,8 +15,8 @@
   "identity_mode": "numeric",
   "max_combined_pdf_bytes": 50000000,
   "rubric_validation": {
-    "mode": "headings",
-    "approved_sha256": ""
+    "mode": "sha256",
+    "approved_sha256": "81b5ac0266b1437e49c34043d9795f1417a435f4265343849d8db7d37d4c6187"
   },
   "notes": "Benchmark setting: each submission contains the answers of an AI model, not a student, typed and labelled by question part (e.g. 'Question 3.1'; Question 7 may appear as 7a = a_1 and 7b = b_0). The rubric is a compact text version of the official corrected solution, with reference answers and the official point allocations; follow them for partial credit. Answers must be justified except where stated. No negative marking. No final grade conversion."
 }
