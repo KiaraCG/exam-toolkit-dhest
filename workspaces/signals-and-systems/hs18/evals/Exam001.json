@@ -1,0 +1,104 @@
+{
+  "grades": [
+    {
+      "awarded_points": 3,
+      "explanation": "PDF p. 4: The student provides the correct stability condition -2 < aT < 0.",
+      "max_points": 3,
+      "rubric_item": "1.1.a",
+      "rubric_name": "Stable sampling times"
+    },
+    {
+      "awarded_points": 3,
+      "explanation": "PDF p. 4: The student correctly identifies a = 0.",
+      "max_points": 3,
+      "rubric_item": "1.2.a",
+      "rubric_name": "Euler equals exact"
+    },
+    {
+      "awarded_points": 6,
+      "explanation": "PDF p. 4: The student correctly identifies the system as Non-linear, Causal, Time-Invariant, Stable, and with Memory.",
+      "max_points": 6,
+      "rubric_item": "2.a",
+      "rubric_name": "System properties"
+    },
+    {
+      "awarded_points": 3,
+      "explanation": "PDF p. 4: While the intermediate expression is incorrect, the student provides the correct final answer y[n] = delta[n].",
+      "max_points": 3,
+      "rubric_item": "3.1.a",
+      "rubric_name": "Output of G2"
+    },
+    {
+      "awarded_points": 0,
+      "explanation": "PDF p. 4: The student's answer 'y[n] = sin(bn) delta[n] = 0' is incorrect; the expected output is sin(bn).",
+      "max_points": 5,
+      "rubric_item": "3.2.a",
+      "rubric_name": "Output of the cascade"
+    },
+    {
+      "awarded_points": 0,
+      "explanation": "PDF p. 4: The student's answer 'r[n] = 0 for all n' is incorrect.",
+      "max_points": 6,
+      "rubric_item": "4.a",
+      "rubric_name": "Signal r[n]"
+    },
+    {
+      "awarded_points": 2,
+      "explanation": "PDF p. 4: The student correctly identifies the signal as periodic with period N.",
+      "max_points": 2,
+      "rubric_item": "5.1.a",
+      "rubric_name": "Periodicity of z[n]"
+    },
+    {
+      "awarded_points": 0,
+      "explanation": "PDF p. 4: The student provides Z[k] = X[k] * W[k] (convolution), but the correct answer is the pointwise product Z[k] = X[k]W[k].",
+      "max_points": 3,
+      "rubric_item": "5.2.a",
+      "rubric_name": "DFS of z[n]"
+    },
+    {
+      "awarded_points": 0,
+      "explanation": "PDF p. 4: The student's filter H(z) = 1 / (1 + z^-1) notches the frequency pi, not pi/3.",
+      "max_points": 10,
+      "rubric_item": "6.a",
+      "rubric_name": "Filter design"
+    },
+    {
+      "awarded_points": 0,
+      "explanation": "PDF p. 5: The student provides a1 = -0.6 and b0 = 8, which are incorrect according to the rubric logic.",
+      "max_points": 6,
+      "rubric_item": "7.a",
+      "rubric_name": "Identify a1 and b0"
+    },
+    {
+      "awarded_points": 2,
+      "explanation": "PDF p. 5: The student correctly identifies that the system exists but is not unique.",
+      "max_points": 2,
+      "rubric_item": "8.1.a",
+      "rubric_name": "Pair 1 complex exponential"
+    },
+    {
+      "awarded_points": 2,
+      "explanation": "PDF p. 5: The student correctly identifies that the system exists but is not unique.",
+      "max_points": 2,
+      "rubric_item": "8.2.a",
+      "rubric_name": "Pair 2 causal cosine"
+    },
+    {
+      "awarded_points": 0,
+      "explanation": "PDF p. 5: The answer 'Dependent on Figure' is too vague and does not state that the system exists and is not unique.",
+      "max_points": 2,
+      "rubric_item": "8.3.a",
+      "rubric_name": "Pair 3 periodic signals"
+    },
+    {
+      "awarded_points": 0,
+      "explanation": "PDF p. 5: The answer 'Dependent on Figure' is incorrect; the signals have different periods, so no LTI relationship exists.",
+      "max_points": 2,
+      "rubric_item": "8.4.a",
+      "rubric_name": "Pair 4 periodic signals"
+    }
+  ],
+  "human_review_recommended": false,
+  "human_review_reason": ""
+}
