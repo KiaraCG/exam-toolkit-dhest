@@ -1,0 +1,426 @@
+{
+  "grades": [
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer A selected.",
+      "max_points": 1,
+      "rubric_item": "1.a",
+      "rubric_name": "MC question 1"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer E selected.",
+      "max_points": 1,
+      "rubric_item": "2.a",
+      "rubric_name": "MC question 2"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer D selected.",
+      "max_points": 1,
+      "rubric_item": "3.a",
+      "rubric_name": "MC question 3"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer D selected.",
+      "max_points": 1,
+      "rubric_item": "4.a",
+      "rubric_name": "MC question 4"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer E selected.",
+      "max_points": 1,
+      "rubric_item": "5.a",
+      "rubric_name": "MC question 5"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer D selected.",
+      "max_points": 1,
+      "rubric_item": "6.a",
+      "rubric_name": "MC question 6"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer A selected.",
+      "max_points": 1,
+      "rubric_item": "7.a",
+      "rubric_name": "MC question 7"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer E selected.",
+      "max_points": 1,
+      "rubric_item": "8.a",
+      "rubric_name": "MC question 8"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer O selected.",
+      "max_points": 1,
+      "rubric_item": "9.a",
+      "rubric_name": "MC question 9"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer K selected.",
+      "max_points": 1,
+      "rubric_item": "10.a",
+      "rubric_name": "MC question 10"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer E selected.",
+      "max_points": 1,
+      "rubric_item": "11.a",
+      "rubric_name": "MC question 11"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer A selected.",
+      "max_points": 1,
+      "rubric_item": "12.a",
+      "rubric_name": "MC question 12"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer F selected.",
+      "max_points": 1,
+      "rubric_item": "13.a",
+      "rubric_name": "MC question 13"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer E selected.",
+      "max_points": 1,
+      "rubric_item": "14.a",
+      "rubric_name": "MC question 14"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer B selected.",
+      "max_points": 1,
+      "rubric_item": "15.a",
+      "rubric_name": "MC question 15"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer G selected.",
+      "max_points": 1,
+      "rubric_item": "16.a",
+      "rubric_name": "MC question 16"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer A selected.",
+      "max_points": 1,
+      "rubric_item": "17.a",
+      "rubric_name": "MC question 17"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer F selected.",
+      "max_points": 1,
+      "rubric_item": "18.a",
+      "rubric_name": "MC question 18"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer E selected.",
+      "max_points": 1,
+      "rubric_item": "19.a",
+      "rubric_name": "MC question 19"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer E selected.",
+      "max_points": 1,
+      "rubric_item": "20.a",
+      "rubric_name": "MC question 20"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer D selected.",
+      "max_points": 1,
+      "rubric_item": "21.a",
+      "rubric_name": "MC question 21"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer C selected.",
+      "max_points": 1,
+      "rubric_item": "22.a",
+      "rubric_name": "MC question 22"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer E selected.",
+      "max_points": 1,
+      "rubric_item": "23.a",
+      "rubric_name": "MC question 23"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer A selected.",
+      "max_points": 1,
+      "rubric_item": "24.a",
+      "rubric_name": "MC question 24"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer A selected.",
+      "max_points": 1,
+      "rubric_item": "25.a",
+      "rubric_name": "MC question 25"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer A selected.",
+      "max_points": 1,
+      "rubric_item": "26.a",
+      "rubric_name": "MC question 26"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer F selected.",
+      "max_points": 1,
+      "rubric_item": "27.a",
+      "rubric_name": "MC question 27"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer D selected.",
+      "max_points": 1,
+      "rubric_item": "28.a",
+      "rubric_name": "MC question 28"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer D selected.",
+      "max_points": 1,
+      "rubric_item": "29.a",
+      "rubric_name": "MC question 29"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer B selected.",
+      "max_points": 1,
+      "rubric_item": "30.a",
+      "rubric_name": "MC question 30"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer F selected.",
+      "max_points": 1,
+      "rubric_item": "31.a",
+      "rubric_name": "MC question 31"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer J selected.",
+      "max_points": 1,
+      "rubric_item": "32.a",
+      "rubric_name": "MC question 32"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer A selected.",
+      "max_points": 1,
+      "rubric_item": "33.a",
+      "rubric_name": "MC question 33"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer F selected.",
+      "max_points": 1,
+      "rubric_item": "34.a",
+      "rubric_name": "MC question 34"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer C selected.",
+      "max_points": 1,
+      "rubric_item": "35.a",
+      "rubric_name": "MC question 35"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer B selected.",
+      "max_points": 1,
+      "rubric_item": "36.a",
+      "rubric_name": "MC question 36"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer C selected.",
+      "max_points": 1,
+      "rubric_item": "37.a",
+      "rubric_name": "MC question 37"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer C selected.",
+      "max_points": 1,
+      "rubric_item": "38.a",
+      "rubric_name": "MC question 38"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer B selected.",
+      "max_points": 1,
+      "rubric_item": "39.a",
+      "rubric_name": "MC question 39"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer C selected.",
+      "max_points": 1,
+      "rubric_item": "40.a",
+      "rubric_name": "MC question 40"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer A selected.",
+      "max_points": 1,
+      "rubric_item": "41.a",
+      "rubric_name": "MC question 41"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer D selected.",
+      "max_points": 1,
+      "rubric_item": "42.a",
+      "rubric_name": "MC question 42"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer A selected.",
+      "max_points": 1,
+      "rubric_item": "43.a",
+      "rubric_name": "MC question 43"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer C selected.",
+      "max_points": 1,
+      "rubric_item": "44.a",
+      "rubric_name": "MC question 44"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer B selected.",
+      "max_points": 1,
+      "rubric_item": "45.a",
+      "rubric_name": "MC question 45"
+    },
+    {
+      "awarded_points": 0,
+      "explanation": "Incorrect answer selected (Student chose B, key is C).",
+      "max_points": 1,
+      "rubric_item": "46.a",
+      "rubric_name": "MC question 46"
+    },
+    {
+      "awarded_points": 0,
+      "explanation": "Incorrect answer selected (Student chose D, key is A).",
+      "max_points": 1,
+      "rubric_item": "47.a",
+      "rubric_name": "MC question 47"
+    },
+    {
+      "awarded_points": 0,
+      "explanation": "Incorrect answer selected (Student chose B, key is E).",
+      "max_points": 1,
+      "rubric_item": "48.a",
+      "rubric_name": "MC question 48"
+    },
+    {
+      "awarded_points": 0,
+      "explanation": "Incorrect answer selected (Student chose C, key is A).",
+      "max_points": 1,
+      "rubric_item": "49.a",
+      "rubric_name": "MC question 49"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer B selected.",
+      "max_points": 1,
+      "rubric_item": "50.a",
+      "rubric_name": "MC question 50"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer B selected.",
+      "max_points": 1,
+      "rubric_item": "51.a",
+      "rubric_name": "MC question 51"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer A selected.",
+      "max_points": 1,
+      "rubric_item": "52.a",
+      "rubric_name": "MC question 52"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer C selected.",
+      "max_points": 1,
+      "rubric_item": "53.a",
+      "rubric_name": "MC question 53"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer B selected.",
+      "max_points": 1,
+      "rubric_item": "54.a",
+      "rubric_name": "MC question 54"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer B selected.",
+      "max_points": 1,
+      "rubric_item": "55.a",
+      "rubric_name": "MC question 55"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer A selected.",
+      "max_points": 1,
+      "rubric_item": "56.a",
+      "rubric_name": "MC question 56"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer B selected.",
+      "max_points": 1,
+      "rubric_item": "57.a",
+      "rubric_name": "MC question 57"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer C selected.",
+      "max_points": 1,
+      "rubric_item": "58.a",
+      "rubric_name": "MC question 58"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer A selected.",
+      "max_points": 1,
+      "rubric_item": "59.a",
+      "rubric_name": "MC question 59"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "Correct answer D selected.",
+      "max_points": 1,
+      "rubric_item": "60.a",
+      "rubric_name": "MC question 60"
+    }
+  ],
+  "human_review_recommended": false,
+  "human_review_reason": ""
+}
