@@ -276,7 +276,14 @@ def call_model(client: Any, config: Config, options: Settings, prompt: str,
     choice = response.choices[0]
     if getattr(choice, "finish_reason", None) == "content_filter":
         raise ExamError("Model refused or content filtered; no grade saved")
-        
+    
+    # Catch length truncation explicitly
+    if getattr(choice, "finish_reason", None) == "length":
+        raise ExamError(
+            "Model response was truncated due to output token length limits "
+            "(finish_reason='length'). Increase the output token cap or shorten explanations."
+        )
+
     raw = choice.message.content
     if not isinstance(raw, str) or not raw.strip():
         raise ExamError("Model returned no grade JSON")
