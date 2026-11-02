@@ -13,14 +13,15 @@ The contract remains grades + exam-level human_review_recommended/reason.
 from __future__ import annotations
 import argparse
 import base64
+import dataclasses
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 import hashlib
 import importlib.metadata
-from pathlib import Path
 import os
 import sys
 import time
+from pathlib import Path
 from typing import Any
 from urllib.parse import urlsplit
 
@@ -314,7 +315,7 @@ def call_model(client: Any, config: Config, options: Settings, prompt: str,
     }
     print(f"  Response received after {meta['elapsed_seconds']} s; {meta['response_id']}", flush=True)
     return result, meta
-    
+
 def save_result(output: Path, result: dict[str, Any], expected: dict[str, Any], meta: dict[str, Any]) -> None:
     raw = json_bytes(result)
     record = {"schema_version": 1, "completed_at_utc": datetime.now(timezone.utc).isoformat(),
