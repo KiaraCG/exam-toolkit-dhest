@@ -1,0 +1,174 @@
+{
+  "grades": [
+    {
+      "awarded_points": 2,
+      "explanation": "The student correctly identified the discretization method as Forward Euler.",
+      "max_points": 2,
+      "rubric_item": "1.1.a",
+      "rubric_name": "Discretization method"
+    },
+    {
+      "awarded_points": 3,
+      "explanation": "The student correctly identified the relation z = 1 + sTs.",
+      "max_points": 3,
+      "rubric_item": "1.2.a",
+      "rubric_name": "z as a function of s"
+    },
+    {
+      "awarded_points": 0,
+      "explanation": "The student incorrectly identified the stability region as the unit circle (|z| < 1) instead of the half-plane Re(z) < 1.",
+      "max_points": 3,
+      "rubric_item": "1.3.a",
+      "rubric_name": "Stability region mapping"
+    },
+    {
+      "awarded_points": 0,
+      "explanation": "The student selected Plot B, but the correct answer is Plot A.",
+      "max_points": 2,
+      "rubric_item": "2.a",
+      "rubric_name": "High-pass output plot"
+    },
+    {
+      "awarded_points": 0,
+      "explanation": "The student's value for 'a' is incorrect (a = -2 instead of a = 2).",
+      "max_points": 6,
+      "rubric_item": "3.1.a",
+      "rubric_name": "Identify a and b"
+    },
+    {
+      "awarded_points": 0,
+      "explanation": "The range for 'a' is incorrect.",
+      "max_points": 2,
+      "rubric_item": "3.2.a",
+      "rubric_name": "Closed-loop stability range"
+    },
+    {
+      "awarded_points": 0,
+      "explanation": "The proposed transfer function does not match the required properties/rubric answer.",
+      "max_points": 10,
+      "rubric_item": "4.a",
+      "rubric_name": "Filter design"
+    },
+    {
+      "awarded_points": 2,
+      "explanation": "The student correctly described the block diagram (Plot A).",
+      "max_points": 2,
+      "rubric_item": "5.a",
+      "rubric_name": "Block diagram choice"
+    },
+    {
+      "awarded_points": 2,
+      "explanation": "The frequency response calculation is correct.",
+      "max_points": 2,
+      "rubric_item": "6.1.a",
+      "rubric_name": "Frequency response"
+    },
+    {
+      "awarded_points": 2,
+      "explanation": "The student correctly identified the filter as FIR and non-causal.",
+      "max_points": 2,
+      "rubric_item": "6.2.a",
+      "rubric_name": "FIR/IIR and causality"
+    },
+    {
+      "awarded_points": 0,
+      "explanation": "The student used the wrong input signal (cos(pi/3 n) instead of cos(pi n)), leading to an incorrect result.",
+      "max_points": 2,
+      "rubric_item": "6.3.a",
+      "rubric_name": "Output for cosine input"
+    },
+    {
+      "awarded_points": 0,
+      "explanation": "The expression for h[n] is incorrect and mathematically incoherent.",
+      "max_points": 6,
+      "rubric_item": "7.1.a",
+      "rubric_name": "Impulse response"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "The student correctly concluded the system is BIBO stable, matching the rubric.",
+      "max_points": 1,
+      "rubric_item": "7.2.a",
+      "rubric_name": "BIBO stability"
+    },
+    {
+      "awarded_points": 0,
+      "explanation": "No answer provided.",
+      "max_points": 1,
+      "rubric_item": "8.1.a",
+      "rubric_name": "True/false 1"
+    },
+    {
+      "awarded_points": 0,
+      "explanation": "No answer provided.",
+      "max_points": 1,
+      "rubric_item": "8.2.a",
+      "rubric_name": "True/false 2"
+    },
+    {
+      "awarded_points": 0,
+      "explanation": "No answer provided.",
+      "max_points": 1,
+      "rubric_item": "8.3.a",
+      "rubric_name": "True/false 3"
+    },
+    {
+      "awarded_points": 0,
+      "explanation": "No answer provided.",
+      "max_points": 1,
+      "rubric_item": "8.4.a",
+      "rubric_name": "True/false 4"
+    },
+    {
+      "awarded_points": 2,
+      "explanation": "The student correctly calculated the DFS coefficients for X1, but missed X2 and X3.",
+      "max_points": 7,
+      "rubric_item": "9.1.a",
+      "rubric_name": "DFS coefficients"
+    },
+    {
+      "awarded_points": 1,
+      "explanation": "The student correctly identified which signal is aliased.",
+      "max_points": 1,
+      "rubric_item": "9.2.a",
+      "rubric_name": "Aliasing"
+    },
+    {
+      "awarded_points": 3,
+      "explanation": "The DFS coefficients for the input U are correct.",
+      "max_points": 3,
+      "rubric_item": "10.1.a",
+      "rubric_name": "Output DFS coefficients"
+    },
+    {
+      "awarded_points": 2,
+      "explanation": "The student correctly selected Plot B.",
+      "max_points": 2,
+      "rubric_item": "10.2.a",
+      "rubric_name": "Magnitude response plot"
+    },
+    {
+      "awarded_points": 3,
+      "explanation": "The student correctly selected option H.",
+      "max_points": 3,
+      "rubric_item": "10.3.a",
+      "rubric_name": "Low-pass approximation"
+    },
+    {
+      "awarded_points": 2,
+      "explanation": "The formula for the DFT matrix elements is correct.",
+      "max_points": 2,
+      "rubric_item": "11.1.a",
+      "rubric_name": "DFT matrix entries"
+    },
+    {
+      "awarded_points": 2,
+      "explanation": "The proof of linearity is correct.",
+      "max_points": 2,
+      "rubric_item": "11.2.a",
+      "rubric_name": "Linearity proof"
+    }
+  ],
+  "human_review_recommended": false,
+  "human_review_reason": ""
+}

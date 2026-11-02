@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "completed_at_utc": "2026-11-01T18:09:59.106370+00:00",
+  "fingerprint": {
+    "toolkit_version": "EXAM_TOOLKIT_1.0.0",
+    "exam_id": "SS_HS19",
+    "config_sha256": "3a0c959d6c4f495e88e8a011c0305ac8c6eb227e0bdb4ca9d36e4dfdcc7b8f2f",
+    "manifest_sha256": "4387e7b931148fffdc6d74dd06582d0353032abaf8476cf0724f25c80c73b47e",
+    "rubric_sha256": "445abb0383bec8aede136ea91a744f5756eea922131396dd1a687ea092b5dee3",
+    "prompt_sha256": "9aa17b1c26b840a516b5e393596337e062f7bfe283495a33f9ba31a2aa77003e",
+    "exam_sha256": "c7ecf6c91379555e7113dc8974308a82ebee5257a6cbfc8cfdbf45fa10edf303",
+    "exam_filename": "Exam001.pdf",
+    "source_code_sha256": {
+      "score_exams.py": "eeca270b050a0bf978cf570edc80161e13b250a25e5cf666974b7dc80e0c66c6",
+      "exam_common.py": "087b0d00bcf264bb06074b15dd3b03b61c7315cee980ed138de6b3d1fd1f4cf5",
+      "pdf_inputs.py": "6c14ca8989b2cbc159e84435b1af5dc7ddedbd885c652a7abf2941da053af12b",
+      "normalize_exam_pdfs.py": "ef4ff8c0f6d193dd244616817879486a6ceef4c8bbebc0f8ec6180ae3dc283f0"
+    },
+    "library_versions": {
+      "python": "3.12.3",
+      "openai": "3.39.0",
+      "python-dotenv": "1.2.4",
+      "pypdf": "6.21.2"
+    },
+    "request": {
+      "provider": "openai",
+      "endpoint_sha256": "73c7cc2a0efb646e632e503095e73d2396aaa860b01c01ba31c73a3997732222",
+      "deployment": "CSCS-Inference/google/gemma-4-31B-it",
+      "reasoning_effort": "high",
+      "max_output_tokens": 30000,
+      "timeout_seconds": 900.0,
+      "sdk_max_retries": 2,
+      "pdf_detail": "",
+      "pdf_transport": "inline"
+    }
+  },
+  "result_sha256": "878d7080adc286ce2244b731e119cde0a87f33de6d0bf4896fb0372ab2718432",
+  "response": {
+    "response_id": "chatcmpl-335c9776-7acb-4450-8240-1d39fb1d2be6",
+    "reported_model": "CSCS-Inference/google/gemma-4-31B-it",
+    "elapsed_seconds": 147.579,
+    "input_tokens": 6870,
+    "output_tokens": 9797
+  }
+}
