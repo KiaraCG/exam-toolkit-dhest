@@ -17,7 +17,7 @@ import glob, html, json, os, sys
 from collections import defaultdict
 
 SOLVERS = {"Exam001": "Gemma", "Exam002": "Apertus", "Exam003": "Nemotron"}
-GRADER_KEYWORDS = {"apertus": "Apertus", "nemotron": "Nemotron", "glm": "GLM", "qwen": "Qwen", "gptoss": "gpt-oss"}
+GRADER_KEYWORDS = {"apertus": "Apertus", "nemotron": "Nemotron", "glm": "GLM", "kimi": "Kimi", "qwen": "Qwen", "gptoss": "gpt-oss"}
 DEFAULT_GRADER = "Gemma"
 GRADER_ORDER = ["Gemma", "Apertus", "Nemotron", "GLM", "Qwen", "gpt-oss"]
 
