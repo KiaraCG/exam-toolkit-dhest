@@ -9,17 +9,17 @@ Writes results_tables.html (open it in a browser, select all, copy, paste into G
 the tables stay tables) and prints a plain-text summary.
 
 Conventions (edit the two dicts below if yours differ):
-- Which model TOOK the exam is given by the PDF name: Exam001 = Gemma, Exam002 = Apertus, Exam003 = Nemotron.
+- Which model TOOK the exam is given by the PDF name: Exam001 = Gemma, Exam002 = Apertus, Exam003 = Nemotron, Exam004 = O1-mini.
 - Which model GRADED it is given by the output folder name: evals_apertus -> Apertus, evals_nemotron -> Nemotron,
   any other evals* folder -> Gemma. If an exam has several Gemma folders, the most recent result is used.
 """
 import glob, html, json, os, sys
 from collections import defaultdict
 
-SOLVERS = {"Exam001": "Gemma", "Exam002": "Apertus", "Exam003": "Nemotron"}
-GRADER_KEYWORDS = {"apertus": "Apertus", "nemotron": "Nemotron", "glm": "GLM", "kimi": "Kimi", "qwen": "Qwen", "gptoss": "gpt-oss"}
+SOLVERS = {"Exam001": "Gemma", "Exam002": "Apertus", "Exam003": "Nemotron", "Exam004": "Kimi", "Exam005": "GLM"}
+GRADER_KEYWORDS = {"apertus": "Apertus", "nemotron": "Nemotron", "glm": "GLM", "kimi": "Kimi"}
 DEFAULT_GRADER = "Gemma"
-GRADER_ORDER = ["Gemma", "Apertus", "Nemotron", "GLM", "Qwen", "gpt-oss"]
+GRADER_ORDER = ["Gemma", "Apertus", "Nemotron", "GLM", "Kimi"]
 
 
 def grader_of(folder):
