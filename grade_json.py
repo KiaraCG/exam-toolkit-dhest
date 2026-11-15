@@ -8,8 +8,7 @@
 
 Usage (from the toolkit root, venv active, key exported in the shell):
     python grade_json.py \
-        --exam      data/signals-and-systems/exam_hs17.json \
-        --solution  data/signals-and-systems/solution_hs17.json \
+        --exam      ../aiscientist-dhest/data/signals-and-systems/2017_autumn.json \
         --answers   llm_output/signals-and-systems/gemma/solutions_2017_autumn.json \
         --out       grades/signals-and-systems/hs17/gemma.jsonl
 
@@ -89,16 +88,33 @@ def norm(s):
     return s.rstrip(" .")
 
 
-def option_text(ans, options):
-    """Map an answer given as a letter ('C', 'C)', '(c)') or index to the option text."""
-    if not options:
-        return ans
-    m = re.fullmatch(r"\(?([a-zA-Z])[\).:]?", str(ans).strip())
-    if m:
-        i = ord(m.group(1).lower()) - ord("a")
-        if 0 <= i < len(options) and norm(ans) not in {norm(o) for o in options}:
-            return options[i]
-    return ans
+def option_map(options):
+    """Options as {"A": text, ...} (Kiara's format) or [text, ...] (letters A, B, ... by position)."""
+    if isinstance(options, dict):
+        return {str(k).strip().upper(): v for k, v in options.items()}
+    if isinstance(options, list):
+        return {chr(ord("A") + i): v for i, v in enumerate(options)}
+    return {}
+
+
+def choices(ans, options):
+    """Turn an answer (letter, 'C)', 'A, C', option text, or a list of these) into a set of option letters.
+    Falls back to the normalized text when it cannot be mapped."""
+    om = option_map(options)
+    by_text = {norm(v): k for k, v in om.items()}
+    out = set()
+    for a in (ans if isinstance(ans, list) else [ans]):
+        s = str(a).strip()
+        if norm(s) in by_text:                                  # full option text
+            out.add(by_text[norm(s)]); continue
+        s = re.sub(r"^(?:final\s+)?answer\s*[:=]?\s*", "", s, flags=re.I)
+        parts = [x for x in re.split(r"\s*(?:,|;|/|\band\b|\s)\s*", s) if x]
+        letters = [re.fullmatch(r"[\(\[]?([A-Za-z])[\)\].:]?", x) for x in parts]
+        if om and parts and all(m and m.group(1).upper() in om for m in letters):
+            out |= {m.group(1).upper() for m in letters}
+        else:
+            out.add(norm(s))
+    return out
 
 
 def to_number(x):
@@ -113,15 +129,11 @@ def exact_grade(q, sol, ans):
     key = sol.get("correctAnswer", sol.get("correctAnswers", sol.get("answer")))
     t = q.get("type")
     opts = q.get("options")
-    if t == "multiple-choice":
-        given = ans if isinstance(ans, list) else [ans]
-        keys = key if isinstance(key, list) else [key]
-        ok = {norm(option_text(a, opts)) for a in given} == {norm(k) for k in keys}
-    elif t == "number":
+    if t == "number":
         a, k = to_number(ans), to_number(key)
         ok = a is not None and k is not None and math.isclose(a, k, rel_tol=1e-2, abs_tol=1e-6)
-    else:
-        ok = norm(option_text(ans, opts)) == norm(key)
+    else:                                   # single- or multiple-choice: compare sets of option letters
+        ok = choices(ans, opts) == choices(key, opts)
     return {"awarded_points": pts if ok else 0, "correct": ok, "key": key}
 
 
@@ -162,7 +174,7 @@ def llm_grade(client, model, q, sol, ans, step, attempts, max_tokens):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--exam", required=True)
-    ap.add_argument("--solution", required=True)
+    ap.add_argument("--solution", help="solution JSON; not needed if the exam JSON has an 'answer' per question")
     ap.add_argument("--answers", required=True)
     ap.add_argument("--out", required=True, help="results .jsonl (appended to; reused to resume)")
     ap.add_argument("--model", default=os.getenv("OPENAI_MODEL") or DEFAULT_GRADER, help="grader for free-text")
@@ -174,7 +186,14 @@ def main():
     ap.add_argument("--skip-free-text", action="store_true", help="exact-match questions only, no API calls")
     a = ap.parse_args()
 
-    exam, solution, answers = load_json(a.exam), load_json(a.solution), load_answers(a.answers)
+    exam, answers = load_json(a.exam), load_answers(a.answers)
+    solution = load_json(a.solution) if a.solution else {}
+    for q in exam["questions"]:                       # Kiara's format: {id, question, options, answer}
+        q.setdefault("text", q.get("question", ""))
+        if not q.get("type"):
+            q["type"] = "single-choice" if q.get("options") else "free-text"
+        if q["id"] not in solution and "answer" in q:
+            solution[q["id"]] = {"type": q["type"], "points": q.get("points", 1), "correctAnswer": q["answer"]}
     questions = [q for q in exam["questions"] if not a.only or q["id"] in a.only]
     os.makedirs(os.path.dirname(a.out) or ".", exist_ok=True)
     done = load_done(a.out)
