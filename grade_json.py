@@ -47,16 +47,32 @@ def load_json(path):
 
 
 def load_answers(path):
-    """Accept {"answers": [{"id", "answer"}, ...]}, a plain list of those, or {"q1": answer, ...}."""
+    """Accept {"answers": [{"id", "answer"}, ...]}, a plain list of those, or {"q1": answer, ...}.
+    Returns (answers, votes); votes holds the majority-vote counts ('consensus_type') when present."""
     d = load_json(path)
     items = d.get("answers", d) if isinstance(d, dict) else d
     if isinstance(items, dict):
-        return {str(k): v for k, v in items.items()}
-    out = {}
+        return {str(k): v for k, v in items.items()}, {}
+    out, votes = {}, {}
     for x in items:
         if isinstance(x, dict) and "id" in x:
             out[str(x["id"])] = x.get("answer")
-    return out
+            if "consensus_type" in x:        # dict of vote counts (tie) or a label like "majority_3_of_4"
+                votes[str(x["id"])] = x["consensus_type"]
+    return out, votes
+
+
+def tie_grade(q, sol, counts, mode):
+    """NO_MAJORITY: strict = 0 points; split = points / k if the key is among the k most-voted answers."""
+    pts = sol.get("points", q.get("points", 1))
+    key = choices(sol.get("correctAnswer", sol.get("answer")), q.get("options"))
+    if not isinstance(counts, dict):
+        counts = {}
+    top = max(counts.values()) if counts else 0
+    tied = [c for c, n in counts.items() if n == top]
+    hit = any(choices(c, q.get("options")) == key for c in tied)
+    got = pts / len(tied) if (mode == "split" and hit and tied) else 0
+    return {"awarded_points": round(got, 4), "correct": False, "key_in_tie": hit, "votes": counts}
 
 
 def load_done(path):
@@ -182,11 +198,14 @@ def main():
     ap.add_argument("--timeout", type=float, default=600, help="seconds per API call")
     ap.add_argument("--max-tokens", type=int, default=4000)
     ap.add_argument("--step", type=float, default=0.5, help="point step for free-text partial credit")
+    ap.add_argument("--tie", choices=["strict", "split"], default="strict",
+                    help="majority vote without a majority: strict = 0 points, split = points/k if the key is among the k tied answers")
     ap.add_argument("--only", nargs="*", help="grade only these question ids (e.g. q3 q7)")
     ap.add_argument("--skip-free-text", action="store_true", help="exact-match questions only, no API calls")
     a = ap.parse_args()
 
-    exam, answers = load_json(a.exam), load_answers(a.answers)
+    exam = load_json(a.exam)
+    answers, votes = load_answers(a.answers)
     solution = load_json(a.solution) if a.solution else {}
     for q in exam["questions"]:                       # Kiara's format: {id, question, options, answer}
         q.setdefault("text", q.get("question", ""))
@@ -227,6 +246,8 @@ def main():
         ans = answers.get(qid)
         if ans is None or (isinstance(ans, str) and not ans.strip()):
             rec.update(awarded_points=0, method="missing")
+        elif str(ans).strip().upper() == "NO_MAJORITY":
+            rec.update(tie_grade(q, sol, votes.get(qid, {}), a.tie), method=f"no_majority_{a.tie}")
         elif qtype in EXACT_TYPES:
             rec.update(exact_grade(q, sol, ans), method="exact", answer=ans)
         elif a.skip_free_text:
@@ -240,6 +261,8 @@ def main():
                 failed.append(qid)
                 print(f"  {qid}: FAILED after {a.attempts} attempts ({e}); rerun to retry", flush=True)
                 continue
+        if qid in votes:
+            rec["consensus"] = votes[qid] if isinstance(votes[qid], str) else "no_majority"
         append(a.out, rec)
         done[qid] = rec
         print(f"  {qid}: {rec['awarded_points']:g}/{pts:g} ({rec['method']})", flush=True)
