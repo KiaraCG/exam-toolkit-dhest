@@ -81,7 +81,12 @@ def extract_json(raw):
     a, b = raw.find("{"), raw.rfind("}")
     if a == -1 or b <= a:
         raise ValueError("no JSON object in reply")
-    return json.loads(raw[a:b + 1])
+    s = raw[a:b + 1]
+    try:
+        return json.loads(s)
+    except json.JSONDecodeError:
+        import re   # LaTeX like \omega in the explanation: escape stray backslashes and retry
+        return json.loads(re.sub(r'\\(?!["\\/bfnrtu])', r'\\\\', s))
 
 
 def snap(x, step, hi):
