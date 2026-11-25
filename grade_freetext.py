@@ -89,6 +89,34 @@ def extract_json(raw):
         return json.loads(re.sub(r'\\(?!["\\/bfnrtu])', r'\\\\', s))
 
 
+def _norm(s):
+    return "".join(str(s).split()).lower()
+
+
+def debate_work(answer_entry, part_id, final, mode):
+    """Derivation for one part from the last debate round.
+    match: work of the agent(s) whose final equals the debate's final; if none matches, all agents, labelled.
+    all:   all agents of the last round, labelled."""
+    tr = answer_entry.get("debate_transcript") or {}
+    if not tr:
+        return None, "none"
+    last = tr[max(tr, key=lambda r: int("".join(c for c in r if c.isdigit()) or 0))]
+    agents = []
+    for name, ag in last.items():
+        for p in ag.get("parts", []):
+            if str(p.get("id")) == str(part_id):
+                agents.append((name, ag.get("model", ""), p))
+    if not agents:
+        return None, "none"
+    hit = [x for x in agents if _norm(x[2].get("final", "")) == _norm(final)]
+    if mode == "match" and hit:
+        name, model, p = hit[0]
+        return str(p.get("work", "")), f"match:{name}"
+    text = "\n\n".join(f"[{name} ({model})]\n{p.get('work', '')}\n[{name} final] {p.get('final', '')}"
+                         for name, model, p in agents)
+    return text, "all"
+
+
 def snap(x, step, hi):
     return min(max(round(float(x) / step) * step, 0), hi)
 
@@ -141,11 +169,25 @@ def main():
     ap.add_argument("--timeout", type=float, default=600, help="seconds per API call")
     ap.add_argument("--max-tokens", type=int, default=4000)
     ap.add_argument("--step", type=float, default=0.5)
+    ap.add_argument("--final-only", action="store_true", help="grade only the 'final' field (ignore work/reasoning)")
+    ap.add_argument("--debate-work", choices=["match", "all"],
+                    help="debate files: take the derivation from the last round of debate_transcript "
+                         "(match = agent whose final equals the debate final, falls back to all agents)")
     ap.add_argument("--only", nargs="*", help="grade only these ids, e.g. 1/a 7/b")
     a = ap.parse_args()
 
     rubric, answers = load(a.rubric), load(a.answers)
-    given = {(str(x["id"]), str(p["id"])): p for x in answers.get("answers", []) for p in x.get("parts", [])}
+    given, sources = {}, {}
+    for x in answers.get("answers", []):
+        for p in x.get("parts", []):
+            key = (str(x["id"]), str(p["id"]))
+            p = dict(p)
+            if a.debate_work and not str(p.get("work", "")).strip():
+                w, src = debate_work(x, p["id"], p.get("final", ""), a.debate_work)
+                if w:
+                    p["work"] = w
+                sources[key] = src
+            given[key] = p
     os.makedirs(os.path.dirname(a.out) or ".", exist_ok=True)
     done = load_done(a.out)
     parts = [(q, p) for q in rubric["questions"] for p in q.get("parts", [])]
@@ -173,12 +215,16 @@ def main():
                 client = OpenAI(api_key=key, base_url=SWISS_AI, timeout=a.timeout, max_retries=0)
             print(f"  {pid}: grading ...", flush=True)
             try:
-                rec.update(grade_part(client, a.model, q, p, answer_text(ans), a.step, a.attempts, a.max_tokens),
+                rec.update(grade_part(client, a.model, q, p,
+                                      str(ans.get("final", "")) if a.final_only and isinstance(ans, dict) else answer_text(ans),
+                                      a.step, a.attempts, a.max_tokens),
                            method="llm", grader=a.model)
             except RuntimeError as e:
                 failed.append(pid)
                 print(f"  {pid}: FAILED after {a.attempts} attempts ({e}); rerun to retry", flush=True)
                 continue
+        if (str(q["id"]), str(p["id"])) in sources:
+            rec["work_source"] = sources[(str(q["id"]), str(p["id"]))]
         append(a.out, rec)
         done[pid] = rec
         print(f"  {pid}: {rec['awarded_points']:g}/{p['points']:g} ({rec['method']})", flush=True)
