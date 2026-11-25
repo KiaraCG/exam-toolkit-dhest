@@ -112,6 +112,11 @@ def debate_work(answer_entry, part_id, final, mode):
     if mode == "match" and hit:
         name, model, p = hit[0]
         return str(p.get("work", "")), f"match:{name}"
+    if mode == "best":
+        import difflib
+        sim = lambda x: difflib.SequenceMatcher(None, _norm(x[2].get("final", "")), _norm(final)).ratio()
+        name, model, p = max(agents, key=sim)
+        return str(p.get("work", "")), f"best:{name}:{sim((name, model, p)):.2f}"
     text = "\n\n".join(f"[{name} ({model})]\n{p.get('work', '')}\n[{name} final] {p.get('final', '')}"
                          for name, model, p in agents)
     return text, "all"
@@ -170,9 +175,9 @@ def main():
     ap.add_argument("--max-tokens", type=int, default=4000)
     ap.add_argument("--step", type=float, default=0.5)
     ap.add_argument("--final-only", action="store_true", help="grade only the 'final' field (ignore work/reasoning)")
-    ap.add_argument("--debate-work", choices=["match", "all"],
+    ap.add_argument("--debate-work", choices=["best", "match", "all"],
                     help="debate files: take the derivation from the last round of debate_transcript "
-                         "(match = agent whose final equals the debate final, falls back to all agents)")
+                         "(best = agent whose final is most similar to the debate final; match = identical final, else all agents)")
     ap.add_argument("--only", nargs="*", help="grade only these ids, e.g. 1/a 7/b")
     a = ap.parse_args()
 
