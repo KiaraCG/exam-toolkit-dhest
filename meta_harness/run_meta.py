@@ -68,20 +68,33 @@ def build_prompt(archive, max_calls, n_code=3, n_fail=8):
     return "\n".join(lines)
 
 
-def propose(archive, max_calls):
+def propose(archive, max_calls, out_dir, attempts=3):
     prompt = build_prompt(archive, max_calls)
-    if os.getenv("META_FAKE"):
-        reply = "Fake proposer: copy the baseline.\n```python\n" + open(os.path.join(HERE, "seeds", "baseline.py")).read() + "\n```"
-    else:
-        from llm import _get_client
-        r = _get_client().chat.completions.create(model=PROPOSER, max_tokens=16000,
-                                                   messages=[{"role": "user", "content": prompt}])
-        reply = r.choices[0].message.content or ""
-    code = re.findall(r"```python\s*\n(.*?)```", reply, flags=re.S)
-    if not code:
-        raise ValueError("proposer returned no ```python block")
-    rationale = reply[:reply.find("```")].strip()
-    return code[-1], rationale, prompt
+    open(os.path.join(out_dir, "proposer_prompt.txt"), "w").write(prompt)
+    last = "no attempt"
+    for i in range(1, attempts + 1):
+        if os.getenv("META_FAKE"):
+            reply, finish = "Fake proposer: copy the baseline.\n```python\n" + open(os.path.join(HERE, "seeds", "baseline.py")).read() + "\n```", "stop"
+        else:
+            from llm import _get_client
+            try:
+                r = _get_client().chat.completions.create(model=PROPOSER, max_tokens=int(os.getenv("META_PROPOSER_TOKENS", 32000)),
+                                                           messages=[{"role": "user", "content": prompt}])
+                reply, finish = r.choices[0].message.content or "", r.choices[0].finish_reason
+            except Exception as e:
+                last = f"{type(e).__name__}: {str(e)[:200]}"
+                print(f"  proposer attempt {i}/{attempts} failed: {last}", flush=True)
+                time.sleep(60 if "429" in str(e) else 20)
+                continue
+        open(os.path.join(out_dir, f"proposer_reply_{i}.txt"), "w").write(f"[finish_reason: {finish}]\n{reply}")
+        blocks = re.findall(r"```(?:python|py)?[ \t]*\n(.*?)```", reply, flags=re.S)
+        blocks = [b for b in blocks if "def solve" in b]
+        if blocks:
+            rationale = reply[:reply.find("```")].strip()
+            return blocks[-1], rationale
+        last = f"no code block with solve() (finish_reason={finish}, {len(reply)} chars)"
+        print(f"  proposer attempt {i}/{attempts}: {last}", flush=True)
+    raise ValueError(f"proposer failed: {last}")
 
 
 def main():
@@ -116,10 +129,9 @@ def main():
         d = os.path.join(a.archive, f"{i:03d}_iter")
         os.makedirs(d, exist_ok=True)
         try:
-            code, rationale, prompt = propose(a.archive, max_calls)
+            code, rationale = propose(a.archive, max_calls, d)
             open(os.path.join(d, "harness.py"), "w").write(code)
             open(os.path.join(d, "rationale.md"), "w").write(rationale)
-            open(os.path.join(d, "proposer_prompt.txt"), "w").write(prompt)
             load_harness(os.path.join(d, "harness.py"))                              # fails fast on broken code
             s = evaluate(d, a.search, a.workers, a.limit)
             print(f"iter {i}: {s['accuracy']}% {s['per_exam']} calls {s['calls_per_question']} | {rationale[:120]}", flush=True)
