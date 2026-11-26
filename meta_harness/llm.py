@@ -36,7 +36,8 @@ class LLM:
     models = MODELS
     max_calls_per_question = int(os.getenv("META_MAX_CALLS", 20))
 
-    def __call__(self, model, prompt, max_tokens=4000, temperature=None, system=None, attempts=3):
+    def __call__(self, model, prompt, max_tokens=None, temperature=None, system=None, attempts=3):
+        max_tokens = max_tokens or int(os.getenv("META_MAX_TOKENS", 16000))   # reasoning models need room to think
         model = MODELS.get(model, model)
         if not any(model == m for m in MODELS.values()):
             raise ValueError(f"model not allowed: {model} (use one of {list(MODELS)})")

@@ -11,7 +11,7 @@ def format_question(q):
 
 def solve(question, llm):
     prompt = format_question(question) + "\n\nThink step by step, check your result, then end with 'Final answer: <letter>'."
-    answers = [llm.extract_choice(llm(m, prompt, max_tokens=4000), question["options"]) for m in MODELS]
+    answers = [llm.extract_choice(llm(m, prompt), question["options"]) for m in MODELS]
     votes = Counter(a for a in answers if a)
     if not votes:
         return ""

@@ -22,7 +22,7 @@ calls per question reasonable (at most {max_calls}).
 Harness interface (write a complete file harness.py):
 - define `solve(question, llm) -> str` returning the option letter (e.g. "C").
 - `question` is a dict: id, question (text, may contain LaTeX), options (dict letter -> text), image_path (figures are NOT available to you).
-- `llm(model, prompt, max_tokens=4000, temperature=None, system=None) -> str` calls a model. Allowed models: {models}.
+- `llm(model, prompt, max_tokens=None, temperature=None, system=None) -> str` calls a model (default max_tokens 16000; reasoning models need room to think, too few tokens gives empty replies). Allowed models: {models}.
 - `llm.extract_choice(text, options)` extracts the final letter from a reply ('' if none).
 - Only the Python standard library may be imported. No network or file access except through llm().
 - Calls run in parallel threads: keep solve() free of global mutable state.
