@@ -23,7 +23,8 @@ Harness interface (write a complete file harness.py):
 - define `solve(question, llm) -> str` returning the option letter (e.g. "C").
 - `question` is a dict: id, question (text, may contain LaTeX), options (dict letter -> text), image_path (figures are NOT available to you).
 - `llm(model, prompt, max_tokens=None, temperature=None, system=None) -> str` calls a model (default max_tokens 16000; reasoning models need room to think, too few tokens gives empty replies). Allowed models: {models}.
-- `llm.extract_choice(text, options)` extracts the final letter from a reply ('' if none).
+- extra llm() options: json_mode=True (force a JSON reply), thinking=True/False (switch the model's built-in thinking on/off).
+- `llm.extract_choice(text, options)` extracts the final letter from a reply, also from JSON {{"answer": "C"}} ('' if none).
 - Only the Python standard library may be imported. No network or file access except through llm().
 - Calls run in parallel threads: keep solve() free of global mutable state.
 
@@ -68,32 +69,47 @@ def build_prompt(archive, max_calls, n_code=3, n_fail=8):
     return "\n".join(lines)
 
 
+def _ask(messages):
+    from llm import _get_client
+    r = _get_client().chat.completions.create(model=PROPOSER, max_tokens=int(os.getenv("META_PROPOSER_TOKENS", 32000)),
+                                               messages=messages)
+    return r.choices[0].message.content or "", r.choices[0].finish_reason
+
+
 def propose(archive, max_calls, out_dir, attempts=3):
     prompt = build_prompt(archive, max_calls)
     open(os.path.join(out_dir, "proposer_prompt.txt"), "w").write(prompt)
+    messages = [{"role": "user", "content": prompt}]
     last = "no attempt"
     for i in range(1, attempts + 1):
         if os.getenv("META_FAKE"):
             reply, finish = "Fake proposer: copy the baseline.\n```python\n" + open(os.path.join(HERE, "seeds", "baseline.py")).read() + "\n```", "stop"
         else:
-            from llm import _get_client
             try:
-                r = _get_client().chat.completions.create(model=PROPOSER, max_tokens=int(os.getenv("META_PROPOSER_TOKENS", 32000)),
-                                                           messages=[{"role": "user", "content": prompt}])
-                reply, finish = r.choices[0].message.content or "", r.choices[0].finish_reason
+                reply, finish = _ask(messages)
             except Exception as e:
                 last = f"{type(e).__name__}: {str(e)[:200]}"
                 print(f"  proposer attempt {i}/{attempts} failed: {last}", flush=True)
                 time.sleep(60 if "429" in str(e) else 20)
                 continue
         open(os.path.join(out_dir, f"proposer_reply_{i}.txt"), "w").write(f"[finish_reason: {finish}]\n{reply}")
-        blocks = re.findall(r"```(?:python|py)?[ \t]*\n(.*?)```", reply, flags=re.S)
-        blocks = [b for b in blocks if "def solve" in b]
-        if blocks:
-            rationale = reply[:reply.find("```")].strip()
-            return blocks[-1], rationale
-        last = f"no code block with solve() (finish_reason={finish}, {len(reply)} chars)"
-        print(f"  proposer attempt {i}/{attempts}: {last}", flush=True)
+        blocks = [b for b in re.findall(r"```(?:python|py)?[ \t]*\n(.*?)```", reply, flags=re.S) if "def solve" in b]
+        if not blocks:
+            last = f"no code block with solve() (finish_reason={finish}, {len(reply)} chars)"
+            print(f"  proposer attempt {i}/{attempts}: {last}", flush=True)
+            continue
+        code = blocks[-1]
+        try:
+            compile(code, "harness.py", "exec")
+        except SyntaxError as e:                       # give the error back to the proposer and let it fix the file
+            last = f"SyntaxError: {e.msg} (line {e.lineno})"
+            print(f"  proposer attempt {i}/{attempts}: {last}; asking for a fix", flush=True)
+            messages += [{"role": "assistant", "content": reply},
+                         {"role": "user", "content": f"Your harness.py does not compile: {last}: {(e.text or '').strip()}\n"
+                                                     "Return the complete corrected file in a single ```python block."}]
+            continue
+        rationale = reply[:reply.find("```")].strip() or open(os.path.join(out_dir, "proposer_reply_1.txt")).read()[:600]
+        return code, rationale
     raise ValueError(f"proposer failed: {last}")
 
 
@@ -105,6 +121,7 @@ def main():
     ap.add_argument("--iterations", type=int, default=10)
     ap.add_argument("--limit", type=int, help="first N questions per search exam (cheaper search)")
     ap.add_argument("--workers", type=int, default=4)
+    ap.add_argument("--seeds", nargs="+", help="seed names from meta_harness/seeds (default: all), e.g. kiara_rta best_run1")
     a = ap.parse_args()
     os.makedirs(a.archive, exist_ok=True)
     max_calls = LLM.max_calls_per_question
@@ -117,7 +134,13 @@ def main():
         print(f"Best on search: {os.path.basename(d)} ({s['accuracy']}%). Test:", json.dumps(evaluate(out, a.test, a.workers)))
         return
 
-    for seed in sorted(glob.glob(os.path.join(HERE, "seeds", "*.py"))):            # seeds = hand-made harnesses
+    seeds = sorted(glob.glob(os.path.join(HERE, "seeds", "*.py")))
+    if a.seeds:
+        seeds = [x for x in seeds if os.path.basename(x)[:-3] in a.seeds]
+        missing = set(a.seeds) - {os.path.basename(x)[:-3] for x in seeds}
+        if missing:
+            raise SystemExit(f"unknown seeds: {sorted(missing)}")
+    for seed in seeds:                                                                # seeds = hand-made harnesses
         d = os.path.join(a.archive, "000_" + os.path.basename(seed)[:-3])
         if not os.path.exists(os.path.join(d, "score.json")):
             os.makedirs(d, exist_ok=True)
